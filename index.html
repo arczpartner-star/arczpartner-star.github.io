@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCZ (아크즈) | We Draw the Growth Arc</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar"></div></div>
+  <header>
+    <a href="index.html" class="logo-wrap">
+      <img src="assets/logo-mark-white.png" alt="ARCZ" class="logo-mark">
+      <span class="logo">ARCZ</span>
+    </a>
+    <nav>
+      <a href="index.html" data-nav="index.html">처음으로</a>
+      <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
+      <a href="services.html" data-nav="services.html">서비스안내</a>
+      <a href="tips.html" data-nav="tips.html">마케팅팁</a>
+      <a href="contact.html" class="nav-btn">문의하기</a>
+      <button class="hamburger-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+  <nav class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <div class="mobile-drawer__head">
+      <span class="logo-wrap">
+        <img src="assets/logo-mark-white.png" alt="ARCZ" class="logo-mark">
+        <span class="logo">ARCZ</span>
+      </span>
+      <button class="mobile-drawer__close" type="button" aria-label="메뉴 닫기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <a href="index.html" data-nav="index.html">처음으로</a>
+    <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
+    <a href="services.html" data-nav="services.html">서비스안내</a>
+    <a href="tips.html" data-nav="tips.html">마케팅팁</a>
+    <a href="contact.html" class="mobile-drawer__cta">문의하기</a>
+  </nav>
+
+  <main>
+    <!-- 히어로 -->
+    <div class="hero-section hero-section--type" id="hero">
+      <canvas class="ribbon-field-canvas" aria-hidden="true"></canvas>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <img src="assets/logo-mark-white.png" alt="" class="hero-mark-bg">
+      <div class="hero-container hero-container--center">
+        <div class="hero-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M4 19.5L10 13l4 4L20 8"/></svg>
+          DIGITAL GROWTH PARTNER
+        </div>
+        <div class="eng">
+          <span class="line">We <span class="grad-text">Draw</span></span>
+          <span class="line">the <span class="grad-text">Growth Arc</span></span>
+        </div>
+        <h1>From A to Zenith, <b>ARCZ</b> — 성장의 시작부터 정점까지</h1>
+        <p>비즈니스의 성장은 우연히 일어나지 않습니다. 데이터, 정교한 타겟팅, 고객의 마음을 움직이는 크리에이티브가 한데 어우러질 때 비로소 우상향의 성장 궤도가 그려집니다. 아크즈는 그 곡선을 함께 그리는 디지털 종합 마케팅 파트너입니다.</p>
+      </div>
+    </div>
+
+    <!-- 서비스 키워드 마퀴 -->
+    <div class="marquee-band" aria-hidden="true">
+      <div class="marquee-track">
+        <span><b>SNS·퍼포먼스 광고</b></span>
+        <span><b>공식 검색광고(SA)</b></span>
+        <span><b>브랜드 채널 브랜딩</b></span>
+        <span><b>크리에이티브 제작</b></span>
+        <span><b>전환 퍼널 기획</b></span>
+        <span><b>로컬 비즈니스 최적화</b></span>
+        <span><b>데이터 분석·리타깃팅</b></span>
+        <span><b>인플루언서 시딩</b></span>
+        <span><b>SNS·퍼포먼스 광고</b></span>
+        <span><b>공식 검색광고(SA)</b></span>
+        <span><b>브랜드 채널 브랜딩</b></span>
+        <span><b>크리에이티브 제작</b></span>
+        <span><b>전환 퍼널 기획</b></span>
+        <span><b>로컬 비즈니스 최적화</b></span>
+        <span><b>데이터 분석·리타깃팅</b></span>
+        <span><b>인플루언서 시딩</b></span>
+      </div>
+    </div>
+
+    <!-- ARCZ 메소드 -->
+    <section id="method">
+      <div class="sec-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M4 19.5L10 13l4 4L20 8"/></svg>
+        ARCZ Method
+      </div>
+      <h2 class="sec-title">A to Z, 성장을 그리는 4단계</h2>
+      <p class="sec-desc">ARCZ라는 이름에는 일하는 방식과 마케팅을 대하는 철학이 그대로 담겨 있습니다.</p>
+
+      <div class="timeline">
+        <div class="timeline-track"><div class="timeline-track__fill"></div></div>
+
+        <div class="timeline-item">
+          <div class="timeline-item__text">
+            <div class="timeline-item__tag">Step 01 · A</div>
+            <h3>데이터 기반 현장 분석</h3>
+            <p class="timeline-item__quote">"모든 성장의 시작은 '숫자'에 있습니다."</p>
+            <p class="timeline-item__body">막연한 감이나 유행에 의존하지 않습니다. 잠재고객의 검색 경로, 경쟁사 점유율, 기존 광고 성과를 철저히 데이터로 분석해 불필요한 비용 누수를 먼저 차단합니다.</p>
+          </div>
+          <div class="timeline-item__node"></div>
+          <div class="timeline-item__visual">
+            <svg class="timeline-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle class="tl-dim" cx="100" cy="100" r="72" stroke-width="1" stroke-dasharray="3 6"/>
+              <circle class="tl-dim" cx="100" cy="100" r="46" stroke-width="1" stroke-dasharray="3 6"/>
+              <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <line x1="100" y1="100" x2="100" y2="22"/>
+                <line x1="100" y1="100" x2="100" y2="22" transform="rotate(45 100 100)"/>
+                <line x1="100" y1="100" x2="100" y2="22" transform="rotate(90 100 100)"/>
+                <line x1="100" y1="100" x2="100" y2="22" transform="rotate(135 100 100)"/>
+                <line x1="100" y1="100" x2="100" y2="22" transform="rotate(180 100 100)"/>
+                <line x1="100" y1="100" x2="100" y2="22" transform="rotate(225 100 100)"/>
+                <line x1="100" y1="100" x2="100" y2="22" transform="rotate(270 100 100)"/>
+                <line x1="100" y1="100" x2="100" y2="22" transform="rotate(315 100 100)"/>
+              </g>
+              <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M92 34l8-14 8 14"/>
+                <path d="M92 34l8-14 8 14" transform="rotate(45 100 100)"/>
+                <path d="M92 34l8-14 8 14" transform="rotate(90 100 100)"/>
+                <path d="M92 34l8-14 8 14" transform="rotate(135 100 100)"/>
+                <path d="M92 34l8-14 8 14" transform="rotate(180 100 100)"/>
+                <path d="M92 34l8-14 8 14" transform="rotate(225 100 100)"/>
+                <path d="M92 34l8-14 8 14" transform="rotate(270 100 100)"/>
+                <path d="M92 34l8-14 8 14" transform="rotate(315 100 100)"/>
+              </g>
+              <circle cx="100" cy="100" r="3.5" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-item__text">
+            <div class="timeline-item__tag">Step 02 · R</div>
+            <h3>타깃 결핍 중심의 적합성 설계</h3>
+            <p class="timeline-item__quote">"가장 강력한 메시지는 '나의 이야기'처럼 들릴 때 나옵니다."</p>
+            <p class="timeline-item__body">단순 기능 홍보를 넘어, 고객이 광고를 마주한 순간 '자신의 문제와 결핍'을 발견하도록 유도하는 공감형 스토리텔링과 USP 소구점을 설계합니다.</p>
+          </div>
+          <div class="timeline-item__node"></div>
+          <div class="timeline-item__visual">
+            <svg class="timeline-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle stroke="currentColor" stroke-width="1.6" cx="100" cy="100" r="72"/>
+              <ellipse class="tl-dim" cx="100" cy="100" rx="26" ry="72" stroke-width="1.2"/>
+              <ellipse class="tl-dim" cx="100" cy="100" rx="50" ry="72" stroke-width="1.2"/>
+              <line class="tl-dim" x1="28" y1="100" x2="172" y2="100" stroke-width="1.2"/>
+              <line class="tl-accent-b" x1="36" y1="164" x2="160" y2="40" stroke-width="1.8" stroke-dasharray="5 6"/>
+              <path class="tl-accent-b" d="M148 30l14 4 -4 14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-item__text">
+            <div class="timeline-item__tag">Step 03 · C</div>
+            <h3>마진을 남기는 전환 퍼널 구축</h3>
+            <p class="timeline-item__quote">"단순한 노출을 넘어, 실질적인 '움직임'을 만듭니다."</p>
+            <p class="timeline-item__body">허수 클릭을 배제하고 문의, 상담 예약, 실제 결제까지 이탈 없이 매끄럽게 연결되는 모바일 최적화 랜딩페이지와 리드 수집 퍼널을 최적화합니다.</p>
+          </div>
+          <div class="timeline-item__node"></div>
+          <div class="timeline-item__visual">
+            <svg class="timeline-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path stroke="currentColor" stroke-width="1.6" d="M40 100a60 60 0 0 0 120 0"/>
+              <line stroke="currentColor" stroke-width="1.6" x1="40" y1="100" x2="160" y2="100"/>
+              <line class="tl-accent-b" x1="100" y1="34" x2="100" y2="166" stroke-width="1.8"/>
+              <path class="tl-accent-b" d="M92 44l8-14 8 14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="tl-accent-b" d="M92 156l8 14 8-14" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-item__text">
+            <div class="timeline-item__tag">Step 04 · Z</div>
+            <h3>지속 가능한 비즈니스의 정점</h3>
+            <p class="timeline-item__quote">"목표는 비즈니스가 도달할 최고의 순간입니다."</p>
+            <p class="timeline-item__body">단기적인 반짝 성과에 안주하지 않고, 고객 획득 단가(CPA)를 안정화하며 객단가와 순이익을 극대화하는 성장의 우상향 궤도를 완성합니다.</p>
+          </div>
+          <div class="timeline-item__node"></div>
+          <div class="timeline-item__visual">
+            <svg class="timeline-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line class="tl-dim" x1="30" y1="170" x2="30" y2="26" stroke-width="1.2"/>
+              <line class="tl-dim" x1="30" y1="170" x2="176" y2="170" stroke-width="1.2"/>
+              <path stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M30 150C70 150 90 92 130 70S162 40 170 30"/>
+              <path stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M156 26l16-4 -2 16"/>
+              <circle class="tl-accent-b-fill" cx="90" cy="97" r="3.5"/>
+              <circle class="tl-accent-b-fill" cx="130" cy="70" r="3.5"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 핵심 역량 -->
+    <section id="expert" class="tone" style="padding-top:64px;">
+      <div class="expert-wrap">
+        <div class="expert-card">
+          <div class="expert-badge">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#lg3)" stroke-width="2"><defs><linearGradient id="lg3" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2dd4e8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs><path d="M12 3l2.6 5.3 5.9.8-4.3 4.1 1 5.8L12 16l-5.2 3 1-5.8-4.3-4.1 5.9-.8z"/></svg>
+          </div>
+          <h3>대행사 직원이 아닌, '전략가 대표'가 직접 설계하고 실행합니다.</h3>
+          <p class="sub">영업 따로, 실행 따로인 대형 대행사의 분업 구조를 거부합니다. 지난 10년간 디지털 미디어와 대규모 플랫폼을 직접 성장시킨 실전 데이터와 자동화 기술을 바탕으로, 대표가 모든 캠페인의 기획부터 소재 제작, 데이터 최적화까지 직접 총괄합니다.</p>
+        </div>
+        <div class="expert-list">
+          <div class="expert-row"><div class="dot"></div><p><b>10년 차 개인 미디어 운영 노하우</b> — 알고리즘 분석력과 국내 유수 플랫폼 공식 앰배서더 경험을 결합한 실전 채널 전략</p></div>
+          <div class="expert-row"><div class="dot"></div><p><b>누적 참여자 100만 명 규모 플랫폼 총괄</b> — 대규모 트래픽 운영과 월간 활성 사용자(MAU) 성장을 이끌어낸 검증된 데이터 역량</p></div>
+          <div class="expert-row"><div class="dot"></div><p><b>파이썬(Python) 기반 마케팅 자동화</b> — 시장 트렌드와 경쟁사 데이터를 실시간 수집·분석하여 비효율 비용을 즉각 절감</p></div>
+          <div class="expert-row"><div class="dot"></div><p><b>공공·대기업 프로젝트 총괄 경험</b> — 주요 의사결정권자와의 협업으로 다져진 정교한 전략 기획 및 커뮤니케이션</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STRONG POINT -->
+    <section style="padding-top:56px;">
+      <div class="sec-tag">Strong Point</div>
+      <h2 class="sec-title">단순 노출이 아닌 '비즈니스의 정점(Zenith)'을 만듭니다</h2>
+      <p class="sec-desc">조회수만 채우는 무의미한 마케팅 대신, 객단가와 순이익을 남기는 실질적인 성장 구조를 설계합니다.</p>
+      <div class="strong-grid">
+        <div class="strong-item">
+          <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div class="num">01</div>
+          <h4>하청 없는 대표 직접 책임제</h4>
+          <p>상담만 대표가 하고 실무는 주니어에게 넘기지 않습니다. 마케팅 전략 수립부터 광고 라이브, 성과 개선까지 대표가 직접 몰입하여 책임집니다.</p>
+        </div>
+        <div class="strong-item">
+          <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+          <div class="num">02</div>
+          <h4>'내 이야기'로 만드는 적합성 카피</h4>
+          <p>단순 기능 나열이 아닌, 고객이 광고를 보자마자 '자신의 결핍과 문제'를 발견하도록 유도하는 공감형 스토리텔링으로 문의 전환율을 극대화합니다.</p>
+        </div>
+        <div class="strong-item">
+          <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V13M11 20V7M18 20v-6"/></svg></div>
+          <div class="num">03</div>
+          <h4>순이익을 남기는 마진 중심 설계</h4>
+          <p>허수 클릭과 무의미한 노출을 배제합니다. 고객 획득 비용(CPA)과 실제 시공·구매 마진을 고려한 정밀 타깃팅으로 비용 대비 실효 매출을 만듭니다.</p>
+        </div>
+        <div class="strong-item">
+          <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+          <div class="num">04</div>
+          <h4>데이터 기술 기반의 민첩한 실험</h4>
+          <p>막연한 감에 의존하지 않고, 자동화 툴과 실시간 퍼포먼스 데이터를 활용해 반응이 좋은 소재를 빠르게 선별하고 광고 효율을 즉시 최적화합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 진행 프로세스 -->
+    <section class="tone" style="padding-top:56px;">
+      <div class="sec-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        Process
+      </div>
+      <h2 class="sec-title">낭비 없는 성장을 만드는 5단계 프로세스</h2>
+      <p class="sec-desc">주먹구구식 집행을 지양하고, 체계적인 가설 수립과 검증을 통해 캠페인을 고도화합니다.</p>
+      <div class="step-track">
+        <div class="step-item">
+          <div class="step-circle">01</div>
+          <h4>사전 진단 및 인터뷰</h4>
+          <p>비즈니스 현황, 타깃 고객층, 마진 구조 파악</p>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">02</div>
+          <h4>맞춤 전략 & 소재 기획</h4>
+          <p>타깃 공감 카피, 숏폼/이미지 소재 및 전환 퍼널 설계</p>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">03</div>
+          <h4>캠페인 세팅 & 라이브</h4>
+          <p>정밀 타깃팅 적용 및 공식 광고 시스템 집행</p>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">04</div>
+          <h4>데이터 분석 & 최적화</h4>
+          <p>전환 단가(CPA/CPL) 추적 및 고효율 소재 집중 확장</p>
+        </div>
+        <div class="step-item">
+          <div class="step-circle">05</div>
+          <h4>성과 리포트 & 피드백</h4>
+          <p>단순 노출이 아닌 실제 문의·매출 데이터 중심의 정기 피드백</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 파트너십 안내 -->
+    <section style="padding-top:56px;">
+      <div class="sec-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle cx="8" cy="9" r="3.2"/><circle cx="16" cy="9" r="3.2"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5"/></svg>
+        Partnership
+      </div>
+      <h2 class="sec-title">아크즈는 소수의 파트너와 깊게 협력합니다</h2>
+      <div class="fit-grid">
+        <div class="fit-card fit-card--yes">
+          <div class="fit-card__label">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3 4.7-5"/></svg>
+            아크즈와 잘 맞는 분
+          </div>
+          <ul class="fit-list">
+            <li>단순 노출보다 실제 고객 문의와 매출 전환(마진)이 절실한 대표님</li>
+            <li>플랫폼 수수료에서 벗어나 자체적인 고객 유입 구조를 만들고 싶은 분</li>
+            <li>대형 대행사의 기계적인 관리에 지쳐 밀도 높은 1:1 파트너십을 원하는 분</li>
+          </ul>
+        </div>
+        <div class="fit-card fit-card--no">
+          <div class="fit-card__label">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+            아크즈와 맞지 않는 분
+          </div>
+          <ul class="fit-list">
+            <li>비정상적인 어뷰징으로 단기간 순위 보장만을 원하시는 분</li>
+            <li>제품/서비스 자체의 본질 개선 없이 단순 광고 트래픽만으로 해결하려는 분</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 안심 보증 정책 -->
+    <section id="guarantee" class="tone">
+      <div class="sec-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 3l7 3.5v5c0 5-3.2 8.4-7 9.5-3.8-1.1-7-4.5-7-9.5v-5z"/></svg>
+        Risk-Free Policy
+      </div>
+      <span class="guarantee-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+        첫 파트너를 위한 안심 정책
+      </span>
+      <h2 class="sec-title">믿고 맡기실 수 있도록, 조건을 먼저 정합니다</h2>
+      <p class="sec-desc">레퍼런스가 적을수록, 약속은 더 분명해야 한다고 생각합니다. 아크즈와 처음 함께하시는 분들을 위한 조건입니다.</p>
+
+      <div class="guarantee-grid">
+        <div class="guarantee-card">
+          <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3.5v5c0 5-3.2 8.4-7 9.5-3.8-1.1-7-4.5-7-9.5v-5z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div class="q">의뢰 후에도 문의나 효과가 없으면 어떻게 하죠?</div>
+          <div class="a">최소 <b>[3개월]</b> 운영 후에도 사전에 합의한 목표에 명확히 미치지 못하면, <b>[잔여 기간 비용 환불]</b> 등 합의된 방식으로 책임지겠습니다.</div>
+          <div class="guarantee-note">💡 실제로 지킬 수 있는 최소 기간·환불 조건을 확정해 대괄호를 채워주세요.</div>
+        </div>
+        <div class="guarantee-card">
+          <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
+          <div class="q">약속한 일정에 결과물이 안 올라오면요?</div>
+          <div class="a">약속된 일정 내 콘텐츠·소재가 올라오지 않으면 <b>[추가 캠페인 1건 무상 제공]</b> 등으로 보상해 드립니다.</div>
+          <div class="guarantee-note">💡 실제로 제공 가능한 보상 방식으로 대괄호를 채워주세요.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 자주 묻는 질문 -->
+    <section id="faq" style="padding-top:56px;">
+      <div class="sec-tag">FAQ</div>
+      <h2 class="sec-title">자주 묻는 질문</h2>
+      <p class="sec-desc">상담 전 궁금하신 점을 먼저 확인해 보세요.</p>
+      <div class="faq-list" id="faq-list"></div>
+    </section>
+
+    <!-- 문의 및 액션 트리거 -->
+    <section class="tone" style="padding-top:56px;">
+      <div class="trust-block">
+        <div class="quote">지금 내 비즈니스의 마케팅 비효율을 점검해 보세요</div>
+        <p class="body">영업 전화를 집요하게 드리지 않습니다. 현재 겪고 계신 문제점과 실행 가능한 구체적 방향성만 담백하게 진단해 드립니다.</p>
+        <a href="contact.html" class="btn-main" style="margin-top:28px;">맞춤 1:1 마케팅 무료 진단 신청하기 (월 5개사 한정)</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 카카오톡 플로팅 -->
+  <!-- 💡 실제 카카오톡 채널 URL로 교체하세요 -->
+  <a href="#" class="kakao-float" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
+  </a>
+
+  <!-- 스티키 바 -->
+  <div class="sticky-footer">
+    <p>궁금한 점, 편하게 물어보세요.</p>
+    <div class="sticky-footer__actions">
+      <a href="#" class="sticky-footer__kakao" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
+      </a>
+      <a href="contact.html" class="btn-main" style="padding: 10px 22px; font-size: 0.94rem;">무료 상담 신청</a>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <span class="logo-wrap">
+          <img src="assets/logo-mark-white.png" alt="ARCZ" class="logo-mark">
+          <span class="logo">ARCZ</span>
+        </span>
+        <div class="footer-nav">
+          <a href="index.html">처음으로</a>
+          <a href="portfolio.html">포트폴리오</a>
+          <a href="services.html">서비스안내</a>
+          <a href="tips.html">마케팅팁</a>
+          <a href="contact.html">문의하기</a>
+        </div>
+      </div>
+      <div class="footer-biz">
+        상호 아크즈마케팅(ARCZ) · 대표 박진영 · 사업자등록번호 717-02-03899<br>
+        주소 경기도 김포시 풍무로146번길 26, 4층 D10호(풍무동, 프라미스빌딩) · 대표번호 010-5727-0010 · 이메일 arcz_partner@naver.com
+      </div>
+      <div class="footer-copy">© 2026 ARCZ. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    renderFaqs('faq-list', FAQS);
+  </script>
+</body>
+</html>
