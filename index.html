@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARCZ (아크즈) | We Draw the Growth Arc</title>
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
 <link rel="apple-touch-icon" href="assets/favicon-180.png">
@@ -14,11 +14,12 @@
   <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar"></div></div>
   <header>
     <a href="index.html" class="logo-wrap">
-      <img src="assets/logo-mark-white.png" alt="ARCZ" class="logo-mark">
-      <span class="logo">ARCZ</span>
+      <img src="assets/logo-lockup-kr-white.png" alt="ARCZ 아크즈" class="logo-lockup">
     </a>
     <nav>
       <a href="index.html" data-nav="index.html">처음으로</a>
+      <a href="method.html" data-nav="method.html">성장전략</a>
+      <a href="pricing.html" data-nav="pricing.html">비용안내</a>
       <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
       <a href="services.html" data-nav="services.html">서비스안내</a>
       <a href="tips.html" data-nav="tips.html">마케팅팁</a>
@@ -33,14 +34,15 @@
   <nav class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
     <div class="mobile-drawer__head">
       <span class="logo-wrap">
-        <img src="assets/logo-mark-white.png" alt="ARCZ" class="logo-mark">
-        <span class="logo">ARCZ</span>
+        <img src="assets/logo-lockup-kr-white.png" alt="ARCZ 아크즈" class="logo-lockup">
       </span>
       <button class="mobile-drawer__close" type="button" aria-label="메뉴 닫기">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
     <a href="index.html" data-nav="index.html">처음으로</a>
+    <a href="method.html" data-nav="method.html">성장전략</a>
+    <a href="pricing.html" data-nav="pricing.html">비용안내</a>
     <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
     <a href="services.html" data-nav="services.html">서비스안내</a>
     <a href="tips.html" data-nav="tips.html">마케팅팁</a>
@@ -212,7 +214,27 @@
         <div class="expert-list">
           <div class="expert-row"><div class="dot"></div><p><b>10년 차 개인 미디어 운영 노하우</b> — 알고리즘 분석력과 국내 유수 플랫폼 공식 앰배서더 경험을 결합한 실전 채널 전략</p></div>
           <div class="expert-row"><div class="dot"></div><p><b>누적 참여자 100만 명 규모 플랫폼 총괄</b> — 대규모 트래픽 운영과 월간 활성 사용자(MAU) 성장을 이끌어낸 검증된 데이터 역량</p></div>
-          <div class="expert-row"><div class="dot"></div><p><b>파이썬(Python) 기반 마케팅 자동화</b> — 시장 트렌드와 경쟁사 데이터를 실시간 수집·분석하여 비효율 비용을 즉각 절감</p></div>
+          <div class="expert-row expert-row--terminal">
+            <div class="dot"></div>
+            <div class="expert-row__content">
+              <p><b>파이썬(Python) 기반 마케팅 자동화</b> — 시장 트렌드와 경쟁사 데이터를 실시간 수집·분석하여 비효율 비용을 즉각 절감</p>
+              <div class="mini-terminal" aria-hidden="true">
+                <div class="mini-terminal__bar"><span></span><span></span><span></span></div>
+                <div class="mini-terminal__scroll">
+                  <div class="mini-terminal__track">
+                    <p>&gt; Fetching market data... <b>[OK]</b></p>
+                    <p>&gt; Analyzing competitor CPC... <b>[OK]</b></p>
+                    <p>&gt; Optimizing CPL... <b>-42%</b></p>
+                    <p>&gt; Refreshing audience segments... <b>[OK]</b></p>
+                    <p>&gt; Fetching market data... <b>[OK]</b></p>
+                    <p>&gt; Analyzing competitor CPC... <b>[OK]</b></p>
+                    <p>&gt; Optimizing CPL... <b>-42%</b></p>
+                    <p>&gt; Refreshing audience segments... <b>[OK]</b></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="expert-row"><div class="dot"></div><p><b>공공·대기업 프로젝트 총괄 경험</b> — 주요 의사결정권자와의 협업으로 다져진 정교한 전략 기획 및 커뮤니케이션</p></div>
         </div>
       </div>
@@ -241,6 +263,10 @@
           <div class="num">03</div>
           <h4>순이익을 남기는 마진 중심 설계</h4>
           <p>허수 클릭과 무의미한 노출을 배제합니다. 고객 획득 비용(CPA)과 실제 시공·구매 마진을 고려한 정밀 타깃팅으로 비용 대비 실효 매출을 만듭니다.</p>
+          <div class="mini-gauge" aria-hidden="true">
+            <div class="mini-gauge__row"><span>평균 CPA 개선폭</span><b>-35%</b></div>
+            <div class="mini-gauge__bar"><div class="mini-gauge__fill"></div></div>
+          </div>
         </div>
         <div class="strong-item">
           <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
@@ -330,21 +356,24 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
         첫 파트너를 위한 안심 정책
       </span>
-      <h2 class="sec-title">믿고 맡기실 수 있도록, 조건을 먼저 정합니다</h2>
-      <p class="sec-desc">레퍼런스가 적을수록, 약속은 더 분명해야 한다고 생각합니다. 아크즈와 처음 함께하시는 분들을 위한 조건입니다.</p>
+      <h2 class="sec-title">믿고 맡기실 수 있도록, 약속의 기준을 먼저 정합니다</h2>
+      <p class="sec-desc">레퍼런스가 적을수록 책임은 더 분명해야 한다고 생각합니다. 아크즈와 처음 함께하시는 대표님들을 위한 3가지 안심 약속입니다.</p>
 
       <div class="guarantee-grid">
         <div class="guarantee-card">
           <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3.5v5c0 5-3.2 8.4-7 9.5-3.8-1.1-7-4.5-7-9.5v-5z"/><path d="M9 12l2 2 4-4"/></svg></div>
-          <div class="q">의뢰 후에도 문의나 효과가 없으면 어떻게 하죠?</div>
-          <div class="a">최소 <b>[3개월]</b> 운영 후에도 사전에 합의한 목표에 명확히 미치지 못하면, <b>[잔여 기간 비용 환불]</b> 등 합의된 방식으로 책임지겠습니다.</div>
-          <div class="guarantee-note">💡 실제로 지킬 수 있는 최소 기간·환불 조건을 확정해 대괄호를 채워주세요.</div>
+          <div class="q">의뢰 후 사전에 합의한 최소 성과에 미치지 못하면 어쩌죠?</div>
+          <div class="a">최소 3개월 운영 후에도 사전에 합의한 핵심 목표(유효 리드 수, 유입 단가 등)에 미달할 경우, 목표치에 도달할 때까지 <b>최대 1개월간 운영 대행 수수료 없이 무상으로 캠페인 집중 개선 및 추가 운영을 책임 전담</b>합니다.</div>
+        </div>
+        <div class="guarantee-card">
+          <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4"/><path d="M9.5 14l2 2 4-4.5"/></svg></div>
+          <div class="q">성과가 만족스럽지 않을 때 장기 계약에 묶이게 되나요?</div>
+          <div class="a">아크즈는 의무 약정 기간이나 중도 해지 위약금을 요구하지 않습니다. 1개월 단위로 성과를 투명하게 평가하며, <b>서비스가 만족스럽지 않으실 경우 언제든 잔여 기간에 대해 일할 계산하여 즉시 정산 및 종료</b>가 가능합니다.</div>
         </div>
         <div class="guarantee-card">
           <div class="area-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-          <div class="q">약속한 일정에 결과물이 안 올라오면요?</div>
-          <div class="a">약속된 일정 내 콘텐츠·소재가 올라오지 않으면 <b>[추가 캠페인 1건 무상 제공]</b> 등으로 보상해 드립니다.</div>
-          <div class="guarantee-note">💡 실제로 제공 가능한 보상 방식으로 대괄호를 채워주세요.</div>
+          <div class="q">약속한 일정에 소재가 올라오지 않거나 세팅이 지연되면요?</div>
+          <div class="a">사전에 협의된 광고 라이브 및 콘텐츠 발행 일정이 아크즈의 귀책으로 1주일(영업일 기준 5일) 이상 지연될 경우, <b>해당 월 A/B 테스트용 신규 광고 소재 2종을 무상으로 추가 기획·제작</b>해 드립니다.</div>
         </div>
       </div>
     </section>
@@ -368,8 +397,7 @@
   </main>
 
   <!-- 카카오톡 플로팅 -->
-  <!-- 💡 실제 카카오톡 채널 URL로 교체하세요 -->
-  <a href="#" class="kakao-float" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
+  <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener" class="kakao-float" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
     <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
   </a>
 
@@ -377,7 +405,7 @@
   <div class="sticky-footer">
     <p>궁금한 점, 편하게 물어보세요.</p>
     <div class="sticky-footer__actions">
-      <a href="#" class="sticky-footer__kakao" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
+      <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener" class="sticky-footer__kakao" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
       </a>
       <a href="contact.html" class="btn-main" style="padding: 10px 22px; font-size: 0.94rem;">무료 상담 신청</a>
@@ -394,6 +422,8 @@
         </span>
         <div class="footer-nav">
           <a href="index.html">처음으로</a>
+          <a href="method.html">성장전략</a>
+          <a href="pricing.html">비용안내</a>
           <a href="portfolio.html">포트폴리오</a>
           <a href="services.html">서비스안내</a>
           <a href="tips.html">마케팅팁</a>

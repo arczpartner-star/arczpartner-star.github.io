@@ -27,7 +27,10 @@ function renderPosts(containerId, list, opts) {
   const items = opts && opts.limit ? list.slice(0, opts.limit) : list;
   el.innerHTML = items.map(p => `
     <div class="content-card">
-      <div class="content-date">${p.date}</div>
+      <div class="content-card__meta">
+        ${p.category ? `<span class="content-cat">${p.category}</span>` : ''}
+        <span class="content-date">${p.date}</span>
+      </div>
       <h4>${p.title}</h4>
       <a href="${p.url}" target="_blank" rel="noopener">블로그에서 읽기 ${ARC_ICON}</a>
     </div>
@@ -193,7 +196,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const selector = [
     '.sec-tag', '.sec-title', '.sec-desc',
     '.timeline-item__text', '.timeline-item__visual', '.step-item', '.area-card', '.content-card', '.proof-card',
-    '.guarantee-card', '.strong-item', '.faq-item', '.expert-card', '.expert-row', '.fit-card',
+    '.guarantee-card', '.strong-item', '.faq-item', '.expert-card', '.expert-row', '.fit-card', '.hub-card',
+    '.arch-card', '.tech-item', '.pricing-card',
     '.trust-block', '.marquee-band',
     '.hero-badge', '.hero-container--center .eng', '.hero-container--center h1', '.hero-container--center p',
     '.page-hero-inner > *'
@@ -336,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 카드 스포트라이트: 커서 위치를 CSS 변수로 전달해 은은한 글로우가 커서를 따라가게 함
 document.addEventListener('DOMContentLoaded', () => {
-  const selector = '.proof-card, .guarantee-card, .strong-item, .area-card, .content-card:not(.content-card--more)';
+  const selector = '.proof-card, .guarantee-card, .strong-item, .area-card, .content-card:not(.content-card--more), .hub-card, .tech-item, .pricing-card';
   const cards = Array.from(document.querySelectorAll(selector));
   if (!cards.length) return;
   cards.forEach(card => {
@@ -503,4 +507,75 @@ function initRibbonField(canvas) {
 
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('canvas.ribbon-field-canvas').forEach(initRibbonField);
+});
+
+// STRONG POINT 마진 카드: 마우스 호버 시 게이지 바가 채워지며(CSS) 수치도 함께 카운트업(JS)
+document.addEventListener('DOMContentLoaded', () => {
+  const gauge = document.querySelector('.mini-gauge__row b');
+  if (!gauge) return;
+  const card = gauge.closest('.strong-item');
+  if (!card) return;
+  let done = false;
+  card.addEventListener('pointerenter', () => {
+    if (done) return;
+    done = true;
+    animateCountUp(gauge, 1100);
+  });
+});
+
+// ---------- 문의 폼 제출: Netlify Forms 우선 시도 + 실패 시 메일 문의로 자동 전환 ----------
+// GitHub Pages 등 Netlify가 아닌 곳에 배포되면 data-netlify 속성은 아무 동작도 하지 않고
+// 페이지만 새로고침되어 문의가 유실될 수 있다. 이를 막기 위해 제출을 가로채
+// 1) Netlify의 AJAX 제출 방식(같은 form-name의 urlencoded POST)을 우선 시도하고,
+// 2) 실패(비-Netlify 호스팅 등)하면 입력값을 채운 mailto: 링크로 자연스럽게 전환한다.
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('form[name="arcz-contact"]');
+  if (!form) return;
+
+  const encode = (data) => Object.keys(data)
+    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+    .join('&');
+
+  function buildMailFallback(fields) {
+    const subject = `[아크즈 상담 신청] ${fields.store || ''} / ${fields.name || ''}`;
+    const bodyLines = [
+      `상호명/브랜드명: ${fields.store || ''}`,
+      `담당자 성함: ${fields.name || ''}`,
+      `연락처: ${fields.phone || ''}`,
+      `업종: ${fields.business_type || ''}`,
+      '',
+      '현재 가장 큰 고민:',
+      fields.message || '(작성 안 함)'
+    ];
+    const mailto = `mailto:arcz_partner@naver.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+    window.location.href = mailto;
+  }
+
+  function showFormSuccess() {
+    form.innerHTML = `
+      <div class="form-success">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+        <h4>상담 신청이 접수되었습니다</h4>
+        <p>확인 후 1시간 내로 연락드리겠습니다. 감사합니다.</p>
+      </div>
+    `;
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const fields = {};
+    formData.forEach((v, k) => { fields[k] = v; });
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode(fields)
+    })
+      .then((res) => {
+        if (res.ok) showFormSuccess();
+        else buildMailFallback(fields);
+      })
+      .catch(() => buildMailFallback(fields));
+  });
 });
