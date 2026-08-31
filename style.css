@@ -40,9 +40,13 @@ body::before {
 }
 
 .grad-text {
-  background: linear-gradient(135deg, #ffffff 0%, #93c5fd 50%, #60a5fa 100%);
-  background-size: 250% auto;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
   animation: grad-shimmer 4.5s ease-in-out infinite alternate;
   will-change: background-position;
 }
@@ -55,9 +59,12 @@ body::before {
 /* 홈 히어로 대형 타이틀: 흰색 기본 텍스트 + 소프트 블루 그라데이션 포인트 */
 .hero-container--center .eng { color: #ffffff; }
 .hero-container--center .eng .grad-text {
-  background: linear-gradient(180deg, #ffffff 20%, #93c5fd 100%);
-  background-size: 250% auto;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* ---------- 헤더 / 내비 ---------- */
