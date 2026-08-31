@@ -523,59 +523,55 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ---------- 문의 폼 제출: Netlify Forms 우선 시도 + 실패 시 메일 문의로 자동 전환 ----------
-// GitHub Pages 등 Netlify가 아닌 곳에 배포되면 data-netlify 속성은 아무 동작도 하지 않고
-// 페이지만 새로고침되어 문의가 유실될 수 있다. 이를 막기 위해 제출을 가로채
-// 1) Netlify의 AJAX 제출 방식(같은 form-name의 urlencoded POST)을 우선 시도하고,
-// 2) 실패(비-Netlify 호스팅 등)하면 입력값을 채운 mailto: 링크로 자연스럽게 전환한다.
+// ---------- Formspree 문의 폼 비동기 제출 처리 ----------
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('form[name="arcz-contact"]');
+  const form = document.querySelector('form[action*="formspree.io"]');
   if (!form) return;
-
-  const encode = (data) => Object.keys(data)
-    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
-    .join('&');
-
-  function buildMailFallback(fields) {
-    const subject = `[아크즈 상담 신청] ${fields.store || ''} / ${fields.name || ''}`;
-    const bodyLines = [
-      `상호명/브랜드명: ${fields.store || ''}`,
-      `담당자 성함: ${fields.name || ''}`,
-      `연락처: ${fields.phone || ''}`,
-      `업종: ${fields.business_type || ''}`,
-      '',
-      '현재 가장 큰 고민:',
-      fields.message || '(작성 안 함)'
-    ];
-    const mailto = `mailto:arcz_partner@naver.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-    window.location.href = mailto;
-  }
 
   function showFormSuccess() {
     form.innerHTML = `
-      <div class="form-success">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
-        <h4>상담 신청이 접수되었습니다</h4>
-        <p>확인 후 1시간 내로 연락드리겠습니다. 감사합니다.</p>
+      <div class="form-success" style="text-align:center; padding: 40px 20px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="2" style="margin-bottom:16px;"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>
+        <h4 style="font-size:1.25rem; font-weight:700; margin-bottom:8px; color:#fff;">상담 신청이 접수되었습니다</h4>
+        <p style="color:#94a3b8; font-size:0.95rem;">확인 후 남겨주신 연락처로 빠르게 안내드리겠습니다. 감사합니다.</p>
       </div>
     `;
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const formData = new FormData(form);
-    const fields = {};
-    formData.forEach((v, k) => { fields[k] = v; });
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = '전송 중...';
+    }
 
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode(fields)
-    })
-      .then((res) => {
-        if (res.ok) showFormSuccess();
-        else buildMailFallback(fields);
-      })
-      .catch(() => buildMailFallback(fields));
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        showFormSuccess();
+      } else {
+        alert('전송 중 오류가 발생했습니다. 전화나 카카오톡으로 문의 부탁드립니다.');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '상담 신청하기';
+        }
+      }
+    } catch (error) {
+      alert('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '상담 신청하기';
+      }
+    }
   });
 });
