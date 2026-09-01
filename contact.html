@@ -13,17 +13,17 @@
 <body>
   <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar"></div></div>
   <header>
-    <a href="index.html" class="logo-wrap">
+    <a href="/" class="logo-wrap">
       <img src="assets/logo-lockup-kr-white.png" alt="ARCZ 아크즈" class="logo-lockup">
     </a>
     <nav>
-      <a href="index.html" data-nav="index.html">처음으로</a>
-      <a href="method.html" data-nav="method.html">성장전략</a>
-      <a href="pricing.html" data-nav="pricing.html">비용안내</a>
-      <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
-      <a href="services.html" data-nav="services.html">서비스안내</a>
-      <a href="tips.html" data-nav="tips.html">마케팅팁</a>
-      <a href="contact.html" class="nav-btn">문의하기</a>
+      <a href="/" data-nav="/">처음으로</a>
+      <a href="/method" data-nav="/method">성장전략</a>
+      <a href="/pricing" data-nav="/pricing">비용안내</a>
+      <a href="/portfolio" data-nav="/portfolio">포트폴리오</a>
+      <a href="/services" data-nav="/services">서비스안내</a>
+      <a href="/tips" data-nav="/tips">마케팅팁</a>
+      <a href="/contact" class="nav-btn">문의하기</a>
       <button class="hamburger-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-drawer">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
@@ -40,13 +40,13 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
-    <a href="index.html" data-nav="index.html">처음으로</a>
-    <a href="method.html" data-nav="method.html">성장전략</a>
-    <a href="pricing.html" data-nav="pricing.html">비용안내</a>
-    <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
-    <a href="services.html" data-nav="services.html">서비스안내</a>
-    <a href="tips.html" data-nav="tips.html">마케팅팁</a>
-    <a href="contact.html" class="mobile-drawer__cta">문의하기</a>
+    <a href="/" data-nav="/">처음으로</a>
+    <a href="/method" data-nav="/method">성장전략</a>
+    <a href="/pricing" data-nav="/pricing">비용안내</a>
+    <a href="/portfolio" data-nav="/portfolio">포트폴리오</a>
+    <a href="/services" data-nav="/services">서비스안내</a>
+    <a href="/tips" data-nav="/tips">마케팅팁</a>
+    <a href="/contact" class="mobile-drawer__cta">문의하기</a>
   </nav>
 
   <main>
@@ -55,7 +55,7 @@
       <div class="glow-orb" aria-hidden="true"></div>
       <img src="assets/logo-mark-white.png" alt="" class="page-hero-mark">
       <div class="page-hero-inner">
-        <div class="breadcrumb"><a href="index.html">처음으로</a> / 문의하기</div>
+        <div class="breadcrumb"><a href="/">처음으로</a> / 문의하기</div>
         <h1>지금 성장 곡선을 함께 그려보세요</h1>
         <p>데이터 기반의 확실한 마케팅이 필요하신 분, 기존 광고 효율이 낮아 고민이신 분, 브랜드 런칭부터 성장까지 함께할 파트너를 찾으시는 분이라면 편하게 연락주세요.</p>
       </div>
@@ -63,83 +63,83 @@
 
     <section style="padding-top:20px;">
       <div class="contact-layout">
-      <div class="form-box">
-        <form action="https://formspree.io/f/xnpqjvgy" method="POST">
-          <input type="hidden" name="form-name" value="arcz-contact">
-          <div class="form-row">
-            <div class="form-group">
-              <label>상호명 / 브랜드명 *</label>
-              <input type="text" name="store" placeholder="예: 아크즈 다이닝 김포점" required>
+        <div class="form-box">
+          <form action="https://formspree.io/f/xnpqjvgy" method="POST">
+            <input type="hidden" name="form-name" value="arcz-contact">
+            <div class="form-row">
+              <div class="form-group">
+                <label>상호명 / 브랜드명 *</label>
+                <input type="text" name="store" placeholder="예: 아크즈 다이닝 김포점" required>
+              </div>
+              <div class="form-group">
+                <label>담당자 성함 *</label>
+                <input type="text" name="name" placeholder="홍길동 대표" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label>담당자 성함 *</label>
-              <input type="text" name="name" placeholder="홍길동 대표" required>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>연락처 *</label>
+                <input type="tel" name="phone" placeholder="010-0000-0000" required>
+              </div>
+              <div class="form-group">
+                <label>업종</label>
+                <select name="business_type">
+                  <option value="food">식당 / 외식업</option>
+                  <option value="cafe">카페 / 디저트</option>
+                  <option value="beauty">뷰티 / 헤어 / 에스테틱</option>
+                  <option value="homecare">홈케어 / 생활 서비스</option>
+                  <option value="brand">일반 브랜드 / 온라인 셀러</option>
+                  <option value="service">기타 전문 서비스업</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div class="form-row">
             <div class="form-group">
-              <label>연락처 *</label>
-              <input type="tel" name="phone" placeholder="010-0000-0000" required>
+              <label>현재 가장 큰 고민</label>
+              <textarea name="message" rows="3" placeholder="예: 광고는 돌리고 있는데 실제 문의로 이어지지 않습니다."></textarea>
             </div>
-            <div class="form-group">
-              <label>업종</label>
-              <select name="business_type">
-                <option value="food">식당 / 외식업</option>
-                <option value="cafe">카페 / 디저트</option>
-                <option value="beauty">뷰티 / 헤어 / 에스테틱</option>
-                <option value="homecare">홈케어 / 생활 서비스</option>
-                <option value="brand">일반 브랜드 / 온라인 셀러</option>
-                <option value="service">기타 전문 서비스업</option>
-              </select>
+
+            <div class="consent-row">
+              <input type="checkbox" name="privacy_agree" id="privacy_agree" required>
+              <span><strong style="color:#f87171;">[필수]</strong> 개인정보 수집·이용에 동의합니다 (수집 항목: 상호·성함·연락처 · 목적: 상담 및 연락 · 보유: 상담 완료 후 6개월 이내 파기 · 동의 거부 시 상담 접수가 제한될 수 있습니다)</span>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label>현재 가장 큰 고민</label>
-            <textarea name="message" rows="3" placeholder="예: 광고는 돌리고 있는데 실제 문의로 이어지지 않습니다."></textarea>
-          </div>
+            <button type="submit" class="btn-submit-all">상담 신청하기</button>
 
-          <div class="consent-row">
-  <input type="checkbox" name="privacy_agree" id="privacy_agree" required>
-  <span><strong style="color:#f87171;">[필수]</strong> 개인정보 수집·이용에 동의합니다 (수집 항목: 상호·성함·연락처 · 목적: 상담 및 연락 · 보유: 상담 완료 후 6개월 이내 파기 · 동의 거부 시 상담 접수가 제한될 수 있습니다)</span>
-          </div>
-
-          <button type="submit" class="btn-submit-all">상담 신청하기</button>
-
-          <div class="direct-contact">
-            <a href="tel:010-5727-0010">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2.1z"/></svg>
-              010-5727-0010
-            </a>
-            <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
-              카카오톡 채널 문의
-            </a>
-          </div>
-        </form>
-      </div>
-      <div class="contact-aside">
-        <div class="aside-card">
-          <div class="k">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-            RESPONSE TIME
-          </div>
-          <h4>문자·메시지는 빠르게 답변드립니다</h4>
-          <p>무리한 계약 권유 없이, 지금 상황을 듣는 것부터 편하게 시작합니다.</p>
+            <div class="direct-contact">
+              <a href="tel:010-5727-0010">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2.1z"/></svg>
+                010-5727-0010
+              </a>
+              <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
+                카카오톡 채널 문의
+              </a>
+            </div>
+          </form>
         </div>
-        <div class="aside-card">
-          <div class="k">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3l7 3.5v5c0 5-3.2 8.4-7 9.5-3.8-1.1-7-4.5-7-9.5v-5z"/></svg>
-            RISK-FREE POLICY
+        <div class="contact-aside">
+          <div class="aside-card">
+            <div class="k">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              RESPONSE TIME
+            </div>
+            <h4>문자·메시지는 빠르게 답변드립니다</h4>
+            <p>무리한 계약 권유 없이, 지금 상황을 듣는 것부터 편하게 시작합니다.</p>
           </div>
-          <h4>첫 파트너를 위한 안심 보증 정책</h4>
-          <p>목표 미달 시 최대 1개월 무상 집중 개선, 위약금 없는 1개월 단위 계약, 1주일 이상 일정 지연 시 추가 소재 제작 보상 등 대표님의 리스크를 덜어드리는 3가지 안전장치를 약속합니다.</p>
-          <a href="index.html#guarantee" class="link">안심 보증 정책 자세히 보기
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
+          <div class="aside-card">
+            <div class="k">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 3l7 3.5v5c0 5-3.2 8.4-7 9.5-3.8-1.1-7-4.5-7-9.5v-5z"/></svg>
+              RISK-FREE POLICY
+            </div>
+            <h4>첫 파트너를 위한 안심 보증 정책</h4>
+            <p>목표 미달 시 최대 1개월 무상 집중 개선, 위약금 없는 1개월 단위 계약, 1주일 이상 일정 지연 시 추가 소재 제작 보상 등 대표님의 리스크를 덜어드리는 3가지 안전장치를 약속합니다.</p>
+            <a href="/#guarantee" class="link">안심 보증 정책 자세히 보기
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
         </div>
-      </div>
       </div>
     </section>
 
@@ -151,10 +151,43 @@
     </section>
   </main>
 
-  <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener" class="kakao-float" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
-  </a>
+  <!-- 우측 멀티 플로팅 퀵바 -->
+  <div class="floating-quick-bar" aria-label="빠른 문의 및 채널 바로가기">
+    <!-- 네이버 톡톡 -->
+    <a href="http://talk.naver.com/profile/wba3bn4" target="_blank" rel="noopener" class="float-btn float-btn--talk" title="네이버 톡톡 문의" aria-label="네이버 톡톡 상담">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 3C6.48 3 2 6.8 2 11.5c0 2.8 1.6 5.28 4.08 6.78l-1.04 3.72 4.14-2.16c.88.24 1.82.38 2.82.38 5.52 0 10-3.8 10-8.5S17.52 3 12 3zm-2.8 11.2h-2.1V8.8h2.1v5.4zm3.9 0H11V8.8h2.1v5.4zm3.9 0H15V8.8h1.9v5.4z"/>
+      </svg>
+      <span class="float-tooltip">네이버 톡톡</span>
+    </a>
 
+    <!-- 네이버 블로그 -->
+    <a href="https://blog.naver.com/arcz_partner" target="_blank" rel="noopener" class="float-btn float-btn--blog" title="아크즈 공식 블로그" aria-label="공식 블로그 바로가기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/>
+      </svg>
+      <span class="float-tooltip">공식 블로그</span>
+    </a>
+
+    <!-- 네이버 스마트플레이스 (지도) -->
+    <a href="https://naver.me/5ajnjELj" target="_blank" rel="noopener" class="float-btn float-btn--place" title="네이버 지도/플레이스" aria-label="네이버 플레이스 바로가기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      <span class="float-tooltip">네이버 플레이스</span>
+    </a>
+
+    <!-- 카카오톡 채널 -->
+    <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener" class="float-btn float-btn--kakao" title="카카오톡 문의" aria-label="카카오톡 채널 바로가기">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/>
+      </svg>
+      <span class="float-tooltip">카카오톡 문의</span>
+    </a>
+  </div>
+
+  <!-- 푸터 -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-top">
@@ -163,13 +196,13 @@
           <span class="logo">ARCZ</span>
         </span>
         <div class="footer-nav">
-          <a href="index.html">처음으로</a>
-          <a href="method.html">성장전략</a>
-          <a href="pricing.html">비용안내</a>
-          <a href="portfolio.html">포트폴리오</a>
-          <a href="services.html">서비스안내</a>
-          <a href="tips.html">마케팅팁</a>
-          <a href="contact.html">문의하기</a>
+          <a href="/">처음으로</a>
+          <a href="/method">성장전략</a>
+          <a href="/pricing">비용안내</a>
+          <a href="/portfolio">포트폴리오</a>
+          <a href="/services">서비스안내</a>
+          <a href="/tips">마케팅팁</a>
+          <a href="/contact">문의하기</a>
         </div>
       </div>
       <div class="footer-biz">
