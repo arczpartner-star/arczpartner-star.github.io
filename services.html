@@ -13,17 +13,17 @@
 <body>
   <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar"></div></div>
   <header>
-    <a href="index.html" class="logo-wrap">
+    <a href="/" class="logo-wrap">
       <img src="assets/logo-lockup-kr-white.png" alt="ARCZ 아크즈" class="logo-lockup">
     </a>
     <nav>
-      <a href="index.html" data-nav="index.html">처음으로</a>
-      <a href="method.html" data-nav="method.html">성장전략</a>
-      <a href="pricing.html" data-nav="pricing.html">비용안내</a>
-      <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
-      <a href="services.html" data-nav="services.html">서비스안내</a>
-      <a href="tips.html" data-nav="tips.html">마케팅팁</a>
-      <a href="contact.html" class="nav-btn">문의하기</a>
+      <a href="/" data-nav="/">처음으로</a>
+      <a href="/method" data-nav="/method">성장전략</a>
+      <a href="/pricing" data-nav="/pricing">비용안내</a>
+      <a href="/portfolio" data-nav="/portfolio">포트폴리오</a>
+      <a href="/services" data-nav="/services">서비스안내</a>
+      <a href="/tips" data-nav="/tips">마케팅팁</a>
+      <a href="/contact" class="nav-btn">문의하기</a>
       <button class="hamburger-btn" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-drawer">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
@@ -40,13 +40,13 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
-    <a href="index.html" data-nav="index.html">처음으로</a>
-    <a href="method.html" data-nav="method.html">성장전략</a>
-    <a href="pricing.html" data-nav="pricing.html">비용안내</a>
-    <a href="portfolio.html" data-nav="portfolio.html">포트폴리오</a>
-    <a href="services.html" data-nav="services.html">서비스안내</a>
-    <a href="tips.html" data-nav="tips.html">마케팅팁</a>
-    <a href="contact.html" class="mobile-drawer__cta">문의하기</a>
+    <a href="/" data-nav="/">처음으로</a>
+    <a href="/method" data-nav="/method">성장전략</a>
+    <a href="/pricing" data-nav="/pricing">비용안내</a>
+    <a href="/portfolio" data-nav="/portfolio">포트폴리오</a>
+    <a href="/services" data-nav="/services">서비스안내</a>
+    <a href="/tips" data-nav="/tips">마케팅팁</a>
+    <a href="/contact" class="mobile-drawer__cta">문의하기</a>
   </nav>
 
   <main>
@@ -55,7 +55,7 @@
       <div class="glow-orb" aria-hidden="true"></div>
       <img src="assets/logo-mark-white.png" alt="" class="page-hero-mark">
       <div class="page-hero-inner">
-        <div class="breadcrumb"><a href="index.html">처음으로</a> / 서비스안내</div>
+        <div class="breadcrumb"><a href="/">처음으로</a> / 서비스안내</div>
         <h1>비즈니스 성장을 만드는 핵심 실행 영역</h1>
         <p>단기적인 트래픽에 의존하지 않고, 실제 문의와 구매 전환으로 이어지는 데이터 기반의 마케팅 전략을 설계하고 실행합니다.</p>
       </div>
@@ -114,20 +114,54 @@
     </section>
   </main>
 
-  <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener" class="kakao-float" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
-  </a>
+  <!-- 우측 멀티 플로팅 퀵바 -->
+  <div class="floating-quick-bar" aria-label="빠른 문의 및 채널 바로가기">
+    <!-- 네이버 톡톡 -->
+    <a href="http://talk.naver.com/profile/wba3bn4" target="_blank" rel="noopener" class="float-btn float-btn--talk" title="네이버 톡톡 문의" aria-label="네이버 톡톡 상담">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 3C6.48 3 2 6.8 2 11.5c0 2.8 1.6 5.28 4.08 6.78l-1.04 3.72 4.14-2.16c.88.24 1.82.38 2.82.38 5.52 0 10-3.8 10-8.5S17.52 3 12 3zm-2.8 11.2h-2.1V8.8h2.1v5.4zm3.9 0H11V8.8h2.1v5.4zm3.9 0H15V8.8h1.9v5.4z"/>
+      </svg>
+      <span class="float-tooltip">네이버 톡톡</span>
+    </a>
 
+    <!-- 네이버 블로그 -->
+    <a href="https://blog.naver.com/arcz_partner" target="_blank" rel="noopener" class="float-btn float-btn--blog" title="아크즈 공식 블로그" aria-label="공식 블로그 바로가기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16.273 12.845 7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/>
+      </svg>
+      <span class="float-tooltip">공식 블로그</span>
+    </a>
+
+    <!-- 네이버 스마트플레이스 (지도) -->
+    <a href="https://naver.me/5ajnjELj" target="_blank" rel="noopener" class="float-btn float-btn--place" title="네이버 지도/플레이스" aria-label="네이버 플레이스 바로가기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      <span class="float-tooltip">네이버 플레이스</span>
+    </a>
+
+    <!-- 카카오톡 채널 -->
+    <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener" class="float-btn float-btn--kakao" title="카카오톡 문의" aria-label="카카오톡 채널 바로가기">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/>
+      </svg>
+      <span class="float-tooltip">카카오톡 문의</span>
+    </a>
+  </div>
+
+  <!-- 스티키 바 -->
   <div class="sticky-footer">
     <p>궁금한 점, 편하게 물어보세요.</p>
     <div class="sticky-footer__actions">
       <a href="https://pf.kakao.com/_xkDyVX" target="_blank" rel="noopener" class="sticky-footer__kakao" title="카카오톡 문의" aria-label="카카오톡 문의 채널로 이동">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.6 6.4-.2.7-.7 2.5-.8 2.9 0 0-.02.15.08.2.1.06.22 0 .22 0 .3-.04 3.1-2 3.6-2.4.7.1 1.5.15 2.3.15 5.5 0 10-3.4 10-7.6S17.5 3 12 3z"/></svg>
       </a>
-      <a href="contact.html" class="btn-main" style="padding: 10px 22px; font-size: 0.94rem;">무료 상담 신청</a>
+      <a href="/contact" class="btn-main" style="padding: 10px 22px; font-size: 0.94rem;">무료 상담 신청</a>
     </div>
   </div>
 
+  <!-- 푸터 -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-top">
@@ -136,13 +170,13 @@
           <span class="logo">ARCZ</span>
         </span>
         <div class="footer-nav">
-          <a href="index.html">처음으로</a>
-          <a href="method.html">성장전략</a>
-          <a href="pricing.html">비용안내</a>
-          <a href="portfolio.html">포트폴리오</a>
-          <a href="services.html">서비스안내</a>
-          <a href="tips.html">마케팅팁</a>
-          <a href="contact.html">문의하기</a>
+          <a href="/">처음으로</a>
+          <a href="/method">성장전략</a>
+          <a href="/pricing">비용안내</a>
+          <a href="/portfolio">포트폴리오</a>
+          <a href="/services">서비스안내</a>
+          <a href="/tips">마케팅팁</a>
+          <a href="/contact">문의하기</a>
         </div>
       </div>
       <div class="footer-biz">
