@@ -19,7 +19,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Pretendard Variable", Pretendard, -apple-system, "Malgun Gothic", sans-serif; }
-html { background: var(--bg); }
+html { background: var(--bg); scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--ink-soft); line-height: 1.65; word-break: keep-all; padding-bottom: calc(84px + env(safe-area-inset-bottom)); position: relative; }
 svg { display:block; }
 a { color: inherit; }
@@ -68,7 +68,6 @@ body::before {
 }
 
 /* ---------- 헤더 / 내비 ---------- */
-html { scroll-behavior: smooth; }
 header {
   position: fixed; top: 0; left: 0; width: 100%; padding: 16px 8%;
   display: flex; justify-content: space-between; align-items: center;
@@ -138,7 +137,7 @@ section.tone::before {
   .glow-orb { transition: none; }
 }
 
-/* ---------- 카드 스포트라이트 호버 (커서 위치를 따라가는 은은한 글로우) ---------- */
+/* ---------- 카드 스포트라이트 호버 ---------- */
 .proof-card, .guarantee-card, .strong-item, .area-card, .content-card:not(.content-card--more), .hub-card, .tech-item {
   position: relative; overflow: hidden;
 }
@@ -153,8 +152,6 @@ section.tone::before {
 .proof-card > *, .guarantee-card > *, .strong-item > *, .area-card > *, .content-card > *, .hub-card > *, .tech-item > * {
   position: relative; z-index: 1;
 }
-/* 비용안내 카드: featured-tag가 카드 상단 경계 바깥으로 튀어나오므로 overflow:hidden을 쓰는
-   공용 스포트라이트 클리핑 그룹에는 포함하지 않고, 자체 호버 글로우를 별도로 정의 */
 .pricing-card { position: relative; }
 .pricing-card::before {
   content: ""; position: absolute; inset: 0; z-index: 0; opacity: 0; border-radius: inherit;
@@ -167,7 +164,7 @@ section.tone::before {
   .proof-card::before, .guarantee-card::before, .strong-item::before, .area-card::before, .content-card::before { transition: none; }
 }
 
-/* ---------- 보더 빔: 핵심 카드 외곽에 상시 은은하게 회전하는 글로우 스트로크 ---------- */
+/* ---------- 보더 빔 ---------- */
 @property --beam-angle {
   syntax: '<angle>';
   inherits: false;
@@ -188,7 +185,6 @@ section.tone::before {
   pointer-events: none;
   z-index: 2;
 }
-/* 카드마다 시작 각도를 다르게 주어 모든 빔이 똑같이 동기화되어 도는 것을 방지 */
 .strong-item:nth-child(2)::after, .guarantee-card:nth-child(2)::after, .proof-card:nth-child(2)::after { animation-delay: -1.4s; }
 .strong-item:nth-child(3)::after, .guarantee-card:nth-child(3)::after, .proof-card:nth-child(3)::after { animation-delay: -2.8s; }
 .strong-item:nth-child(4)::after, .proof-card:nth-child(4)::after { animation-delay: -4.2s; }
@@ -206,7 +202,7 @@ section.tone::before {
 @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
 
-/* ---------- 서브페이지 헤더 (작은 히어로) ---------- */
+/* ---------- 서브페이지 헤더 ---------- */
 .page-hero { padding: 168px 8% 76px; background: radial-gradient(720px 420px at 85% -8%, rgba(96,165,250,.14), transparent 60%); }
 .page-hero-inner { position:relative; max-width:1080px; margin:0 auto; }
 .breadcrumb { font-size:0.82rem; color:var(--muted); margin-bottom:16px; }
@@ -292,7 +288,7 @@ section.tone::before {
 .expert-row--terminal { align-items:flex-start; }
 .expert-row__content { flex:1; min-width:0; }
 
-/* ---------- 미니 터미널: 파이썬 자동화 로그가 흐르는 위젯 ---------- */
+/* ---------- 미니 터미널 ---------- */
 .mini-terminal { margin-top:14px; width:100%; background:#070a10; border:1px solid var(--border); border-radius:8px; padding:10px 0; overflow:hidden; }
 .mini-terminal__bar { display:flex; gap:5px; padding:0 12px 8px; }
 .mini-terminal__bar span { width:7px; height:7px; border-radius:50%; background:var(--border-strong); }
@@ -336,7 +332,7 @@ section.tone::before {
 .strong-item h4 { font-size:0.98rem; font-weight:800; color:var(--ink); margin-bottom:8px; line-height:1.4; }
 .strong-item p { font-size:0.85rem; color:var(--muted); line-height:1.6; font-weight:500; }
 
-/* ---------- 미니 게이지: 호버 시 채워지는 성과 바 ---------- */
+/* ---------- 미니 게이지 ---------- */
 .mini-gauge { margin-top:16px; padding-top:14px; border-top:1px solid var(--border); }
 .mini-gauge__row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; font-size:0.76rem; }
 .mini-gauge__row span { color:var(--muted); font-weight:600; }
@@ -346,7 +342,7 @@ section.tone::before {
 .strong-item:hover .mini-gauge__fill { transform: scaleX(1) translateZ(0); }
 @media (prefers-reduced-motion: reduce) { .mini-gauge__fill { transition:none; } }
 
-/* ---------- 진행 프로세스 (STEP 1~5) ---------- */
+/* ---------- 진행 프로세스 ---------- */
 .step-track { position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom: 8px; }
 .step-track::before { content:""; position:absolute; top:34px; left:10%; right:10%; height:1px; background: linear-gradient(90deg, transparent, var(--border-strong) 10%, var(--border-strong) 90%, transparent); z-index:0; }
 .step-track::after { content:""; position:absolute; top:34px; left:10%; height:2px; width: calc(var(--track-progress, 0) * 80%); background: linear-gradient(90deg, var(--accent-a), var(--accent-b)); box-shadow: 0 0 14px rgba(103,232,249,.55); transition: width 1.6s cubic-bezier(.16,1,.3,1); z-index:0; }
@@ -434,6 +430,7 @@ section.tone::before {
 .arch-desc p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 16px; }
 .arch-points { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem; color: var(--muted); }
 .arch-points li b { color: var(--ink); }
+
 /* 코드 터미널 UI */
 .code-terminal { background: #06090e; border: 1px solid var(--border-strong); border-radius: 10px; overflow: hidden; }
 .terminal-bar { background: var(--surface-2); padding: 8px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--border); }
@@ -446,6 +443,7 @@ section.tone::before {
 .t-str { color: #34d399; }
 .t-comment { color: #64748b; font-style: italic; }
 .t-cyan { color: var(--accent-a); }
+
 /* 카피 프레임워크 다이어그램 */
 .framework-diagram { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .fw-box { width: 100%; background: var(--surface-2); border: 1px solid var(--border); padding: 14px 18px; border-radius: 10px; display: flex; flex-direction: column; gap: 4px; }
@@ -454,7 +452,8 @@ section.tone::before {
 .fw-sub { font-size: 0.82rem; color: var(--muted); }
 .fw-box--action { border-color: rgba(103,232,249,.4); background: rgba(103,232,249,.06); }
 .fw-arrow { color: var(--muted); font-size: 1rem; }
-/* 깔때기형 퍼널 UI (Layer 03 가독성 개선) */
+
+/* 깔때기형 퍼널 UI */
 .funnel-container { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%; }
 .funnel-step {
   width: 100%;
@@ -480,11 +479,13 @@ section.tone::before {
 .f-badge { font-size: 0.75rem; font-weight: 700; color: var(--accent-a); background: var(--bg); border: 1px solid var(--border-strong); padding: 4px 10px; border-radius: 6px; white-space: nowrap; flex-shrink:0; }
 .funnel-step.step-4 .f-badge { background: var(--accent-b); color: #0b0e14; font-weight: 900; border: none; }
 .funnel-connector { color: var(--muted); font-size: 0.8rem; line-height: 1; }
+
 /* 최적화 루프 UI */
 .loop-diagram { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 24px; }
 .loop-box { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; }
 .loop-step { background: var(--bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; color: var(--ink); }
 .loop-arrow { color: var(--accent-a); font-weight: 900; }
+
 /* 기술 스택 그리드 */
 .tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .tech-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: transform .18s, border-color .18s, background-color .18s; }
@@ -648,7 +649,5 @@ section.tone::before {
 }
 @media (max-width: 560px) {
   .strong-grid, .step-track, .tech-grid { grid-template-columns: 1fr; }
-  .proof-stats { flex-direction:column; }
-}
   .proof-stats { flex-direction:column; }
 }
