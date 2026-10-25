@@ -1,6 +1,8 @@
 /* ARCZ — arcz.kr  ·  공통 스크립트
    사례·글·FAQ 내용은 data.js에서만 고칩니다. */
 
+window.ARCZ_READY = true;   // 이 파일이 실행되지 않으면 2.5초 뒤 숨김 효과를 풀어 내용이 보이게 함(head 스크립트)
+
 const ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -21,7 +23,7 @@ function renderCases(id, list, opts) {
       </div>
       ${(() => { const inner = (opts && opts.short ? '' : `<p style="margin:0">${esc(c.body)}</p>`)
           + (c.note ? `<p class="note">※ ${esc(c.note)}</p>` : '')
-          + (c.linkUrl ? `<a class="link" href="${esc(c.linkUrl)}" target="_blank" rel="noopener">${esc(c.linkText || '관련 글 보기')} ${ICON_ARROW}</a>` : '');
+          + (c.linkUrl ? `<a class="link" href="${esc(c.linkUrl)}"${/^https?:/.test(c.linkUrl) ? ' target="_blank" rel="noopener"' : ''}>${esc(c.linkText || '관련 글 보기')} ${ICON_ARROW}</a>` : '');
         return inner ? `<div class="case__body">${inner}</div>` : ''; })()}
     </article>`).join('');
   observeReveal(el);
@@ -157,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const agree = form.querySelector('input[name="privacy_agree"]');
       if (agree && !agree.checked) { ok = false; msg.textContent = '개인정보 수집·이용에 동의해 주셔야 접수할 수 있습니다.'; msg.classList.add('show'); }
+      const picked = [...form.querySelectorAll('input[data-res]:checked')].map(i => i.value);
+      if (form.dataset.kind === 'resource' && !picked.length) { ok = false; msg.textContent = '받으실 자료를 하나 이상 골라 주세요.'; msg.classList.add('show'); }
       if (!ok) { const first = form.querySelector('.invalid input, .invalid select'); if (first) first.focus(); return; }
 
       const endpoint = (window.ARCZ_CONFIG && window.ARCZ_CONFIG.leadEndpoint) || '';
@@ -172,6 +176,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.disabled = true; btn.textContent = '보내는 중…';
 
       const body = new URLSearchParams(new FormData(form));
+      // 자료실·셀프 점검: 고른 자료 / 점검 결과를 '남긴 내용' 앞에 붙여 시트 한 칸에서 보이게 함
+      body.delete('res');
+      const prefix = (form.dataset.kind === 'resource' ? `[자료 요청] ${picked.join(', ')}` : '') + (form.dataset.prefix || '');
+      if (prefix) body.set('message', (prefix + '\n' + (body.get('message') || '')).trim());
       const ctx = leadContext();
       let utm = ctx.utm;
       try { if (!utm && sessionStorage.getItem('arcz_utm')) utm = new URLSearchParams(sessionStorage.getItem('arcz_utm')).toString(); } catch (e2) {}
@@ -182,13 +190,64 @@ document.addEventListener('DOMContentLoaded', () => {
         const r = await fetch(endpoint, { method: 'POST', body, redirect: 'follow' });
         const data = await r.json();
         if (!data.ok) { fail(data.message); return; }
-        form.innerHTML = `<div class="form-done" role="status"><div class="dot"></div><h4>진단 신청이 접수되었습니다</h4>
+        const tpl = form.dataset.done && document.getElementById(form.dataset.done);
+        if (tpl) {
+          form.innerHTML = tpl.innerHTML;
+          form.querySelectorAll('[data-dl]').forEach(li => { if (!picked.includes(li.dataset.dl)) li.remove(); });
+        } else {
+          form.innerHTML = `<div class="form-done" role="status"><div class="dot"></div><h4>진단 신청이 접수되었습니다</h4>
           <p>남겨 주신 연락처로 대표가 직접 연락드립니다.<br>급하시면 카카오톡 채널로 남겨 주세요.</p></div>`;
+        }
         if (window.gtag) window.gtag('event', 'generate_lead', { form: ctx.page });
         if (window.fbq) window.fbq('track', 'Lead');
       } catch (err) {
         fail();
       }
     });
+  });
+});
+
+/* ---------- 3분 셀프 점검 (checkup.html) ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('checkup');
+  if (!root) return;
+  const qs = [...root.querySelectorAll('.ck-q')];
+  const cnt = root.querySelector('.ck-bar .cnt b');
+  const out = document.getElementById('ck-result');
+  const STAGE = { A: '분석 (A)', R: '메시지 (R)', C: '전환 퍼널 (C)', Z: '정점 (Z)' };
+  const answered = () => qs.filter(q => q.querySelector('input:checked')).length;
+  root.addEventListener('change', e => {
+    const q = e.target.closest('.ck-q'); if (q) q.classList.remove('miss');
+    cnt.textContent = answered();
+  });
+  root.querySelector('.ck-go').addEventListener('click', () => {
+    const miss = qs.filter(q => !q.querySelector('input:checked'));
+    if (miss.length) {
+      miss.forEach(q => q.classList.add('miss'));
+      miss[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const f = miss[0].querySelector('input'); if (f) f.focus({ preventScroll: true });
+      return;
+    }
+    const score = { A: 0, R: 0, C: 0, Z: 0 }, max = { A: 0, R: 0, C: 0, Z: 0 };
+    qs.forEach(q => { const s = q.dataset.stage; score[s] += +q.querySelector('input:checked').value; max[s] += 2; });
+    const total = Object.values(score).reduce((a, b) => a + b, 0), all = Object.values(max).reduce((a, b) => a + b, 0);
+    const ratio = k => score[k] / max[k];
+    const low = Math.min(...Object.keys(score).map(ratio));
+    const weak = Object.keys(score).filter(k => ratio(k) === low);
+    const lvl = total >= all * .75 ? '기본기가 잘 갖춰져 있습니다. 이제 숫자를 키울 차례입니다.'
+              : total >= all * .45 ? '흐름은 있지만, 새는 구간이 보입니다.'
+              : '광고보다 먼저 정리할 것이 있습니다.';
+    out.querySelector('.total').innerHTML = `${total}<small>/ ${all}점</small>`;
+    out.querySelector('.lvl').textContent = lvl;
+    out.querySelector('.ck-bars').innerHTML = Object.keys(score).map(k => `
+      <div class="${weak.includes(k) ? 'weak' : ''}"><span>${STAGE[k]}${weak.includes(k) ? ' · 먼저' : ''}</span>
+      <span class="tr"><i style="width:${Math.round(ratio(k) * 100)}%"></i></span><span class="v">${score[k]}/${max[k]}</span></div>`).join('');
+    out.querySelector('.ck-advice-wrap').innerHTML = weak.map(k => document.getElementById('adv-' + k).innerHTML).join('');
+    out.hidden = false;
+    // 진단 신청 폼에 결과를 함께 보냄
+    const form = document.querySelector('#ck-apply form.js-lead');
+    if (form) form.dataset.prefix = `[셀프 점검] 총점 ${total}/${all} · A ${score.A}/${max.A} · R ${score.R}/${max.R} · C ${score.C}/${max.C} · Z ${score.Z}/${max.Z} · 먼저 볼 단계: ${weak.join('·')}`;
+    const note = document.getElementById('ck-attached'); if (note) note.hidden = false;
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });

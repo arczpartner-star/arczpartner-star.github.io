@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://arcz.kr/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/about</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://arcz.kr/method</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://arcz.kr/services</loc><lastmod>2026-10-25</lastmod></url>
-  <url><loc>https://arcz.kr/pricing</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/solutions</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/solution-home</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/solution-food</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/solution-local</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://arcz.kr/portfolio</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/case-cleaning</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/resources</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/checkup</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://arcz.kr/tips</loc><lastmod>2026-10-25</lastmod></url>
   <url><loc>https://arcz.kr/contact</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://arcz.kr/privacy</loc><lastmod>2026-10-25</lastmod></url>
 </urlset>
