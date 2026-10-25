@@ -647,3 +647,41 @@ h1, h2, h3, h4 { margin:0; letter-spacing:-.03em; }
 .gnb a[href$="checkup.html"][aria-current="page"] { background:var(--arcz-mist); }
 @media (max-width:1280px) { .gnb { gap:20px; } .gnb a { font-size:14.5px; } }
 @media (max-width:1180px) { .gnb { display:none; } .menu-btn { display:flex; } }
+
+/* ==========================================================================
+   처음으로 — 히어로 모션 (브랜드 모션 v3, 2026.10.26)
+   · PC(1100px 이상): 문구가 들어 있는 배너 영상 1920×820. 영상 속 문구 자리에 맞춰 버튼만 HTML로 얹음.
+     높이를 키워 왼쪽 빈 여백만 잘라, 영상 속 문구가 화면 폭과 상관없이 메뉴 로고와 같은 선에서 시작함.
+   · 모바일·태블릿 세로(1099px 이하): 문구는 HTML(읽기 쉽게), 아래쪽 곡선만 세로 배경 영상 1080×1920.
+   · 1099px 이하 가로 화면(태블릿 가로·휴대폰 눕힘): 기존 정지 곡선(SVG) — 배너 속 글자가 너무 작아지는 구간
+   ========================================================================== */
+.hero--motion { display:block; min-height:0; container-type:inline-size; }
+.hero--motion .hero-box { position:relative; }
+.hero--motion .hv { display:none; position:absolute; pointer-events:none; opacity:0; }   /* 재생 전(스크립트가 꺼져 있어도): 아래 포스터 배경이 보임 */
+.hero--motion .hv.on { opacity:1; transition:opacity .6s ease; }
+
+@media (min-width:1100px) {
+  .hero--motion .hero-box {
+    /* --u = 영상 1px이 화면에서 차지하는 크기. 글자 시작점(영상 x 360)이 .wrap 왼쪽 선에 오도록 계산 */
+    --u: max(calc(100cqw / 1920), calc(min(100cqw - 20px, 50cqw + 600px) / 1560));
+    height:calc(var(--u) * 820);
+    background:var(--arcz-deep) url(assets/motion/arcz_hero_banner_1920x820_poster.jpg) right center / auto 100% no-repeat;
+  }
+  .hero--motion .hero-arc { display:none; }
+  .hero--motion .hv-banner { display:block; inset:0; width:100%; height:100%; object-fit:cover; object-position:right center; }
+  .hero--motion .hero-copy { position:static; padding:0; }
+  .hero--motion .hero-copy > :not(.hero__ctas) { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:0; }
+  /* 버튼 자리: 영상 x 360 · y 526 · 높이 56 */
+  .hero--motion .hero__ctas { position:absolute; z-index:2; margin:0; left:calc(100cqw - var(--u) * 1560); top:calc(var(--u) * 526);
+    height:calc(var(--u) * 56); gap:calc(var(--u) * 14); flex-wrap:nowrap; }
+  .hero--motion .hero__ctas .btn { height:100%; padding:0 calc(var(--u) * 30); font-size:max(13px, calc(var(--u) * 18)); gap:calc(var(--u) * 12); }
+  .hero--motion .hero__ctas .btn i { width:max(6px, calc(var(--u) * 8)); height:max(6px, calc(var(--u) * 8)); }
+}
+@media (max-width:1099px) and (orientation:portrait) {
+  .hero--motion .hero-arc { display:none; }
+  .hero--motion .hero-box { --vw:min(100cqw, 640px); background:var(--arcz-deep) url(assets/motion/arcz_hero_bg_9x16_poster.jpg) right bottom / var(--vw) auto no-repeat; }
+  .hero--motion .hero-copy { padding-bottom:calc(var(--vw) * 16 / 9 * .42); }   /* 영상 속 곡선·정점의 점이 문구와 겹치지 않는 높이 */
+  .hero--motion .hv-mob { display:block; right:0; bottom:0; width:var(--vw); height:auto;
+    -webkit-mask-image:linear-gradient(to bottom, transparent, #000 12%); mask-image:linear-gradient(to bottom, transparent, #000 12%); }
+}
+@media (prefers-reduced-motion:reduce) { .hero--motion .hv { display:none !important; } }

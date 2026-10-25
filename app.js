@@ -256,3 +256,31 @@ document.addEventListener('DOMContentLoaded', () => {
     out.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+/* ---------- 처음으로 히어로 영상 ---------- */
+// 화면에 보이는 영상 하나만 내려받아 재생합니다. 준비되기 전에는 포스터 이미지가 보이고, 재생되면 부드럽게 바뀝니다.
+// 동작 줄이기 설정·데이터 절약 모드에서는 영상을 받지 않고 포스터만 보여 줍니다. 화면 밖으로 나가면 멈춥니다.
+document.addEventListener('DOMContentLoaded', () => {
+  const vids = [...document.querySelectorAll('.hero--motion .hv')];
+  if (!vids.length) return;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData);
+  if (calm) return;
+  let inView = true;
+  const activate = () => {
+    vids.forEach(v => {
+      const shown = getComputedStyle(v).display !== 'none';
+      if (shown && !v.dataset.loaded) {
+        v.dataset.loaded = '1';
+        v.classList.add('wait');
+        v.innerHTML = `<source src="${v.dataset.webm}" type="video/webm"><source src="${v.dataset.mp4}" type="video/mp4">`;
+        v.preload = 'auto';
+        v.addEventListener('playing', () => { v.classList.remove('wait'); v.classList.add('on'); }, { once: true });
+        v.load();
+      }
+      if (shown && inView) { const p = v.play(); if (p) p.catch(() => {}); } else v.pause();
+    });
+  };
+  activate();
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(activate, 200); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { inView = es[0].isIntersecting; activate(); }).observe(vids[0].closest('.hero'));
+});
