@@ -11,7 +11,10 @@
  */
 
 // ────────────────────────────────────────────── 설정 (여기만 고치면 됩니다)
+const VERSION = '2026-10-26';
 const CONFIG = {
+  SPREADSHEET_ID: '',                           // 보통 비워 둡니다. 스크립트를 시트의 [확장 프로그램 → Apps Script]가 아닌 곳에서 만들었다면
+                                                // 시트 주소 …/spreadsheets/d/【이 부분】/edit 을 여기에 넣으세요.
   SHEET_NAME: '상담신청',
   NOTIFY_EMAILS: ['arcz_partner@naver.com'],   // 새 신청 알림 받을 메일. 비우면 알림 안 보냄: []
   RETENTION_MONTHS: 6,                          // 상담 완료 후 보관 기간(개인정보 동의 문구와 같게)
@@ -63,12 +66,26 @@ function doPost(e) {
     return json_({ ok: true });
   } catch (err) {
     console.error(err);
-    return json_({ ok: false, code: 'server', message: '일시적인 오류입니다. 전화나 카카오톡으로 연락 주세요.' });
+    return json_({ ok: false, code: 'server', message: '일시적인 오류입니다. 전화나 카카오톡으로 연락 주세요.', detail: String(err && err.message || err) });
   }
 }
 
+// 브라우저에서 웹 앱 주소(/exec)를 열면 연결 상태를 보여 줍니다(시트에 아무것도 쓰지 않음).
 function doGet() {
-  return json_({ ok: true, service: 'arcz-lead', time: new Date().toISOString() });
+  try {
+    const sh = sheet_();
+    return json_({ ok: true, service: 'arcz-lead', version: VERSION, spreadsheet: sh.getParent().getName(), sheet: sh.getName(),
+                   rows: Math.max(0, sh.getLastRow() - 1), mailQuotaLeft: MailApp.getRemainingDailyQuota(), time: new Date().toISOString() });
+  } catch (err) {
+    return json_({ ok: false, service: 'arcz-lead', version: VERSION, error: String(err && err.message || err) });
+  }
+}
+
+// 편집기에서 실행하는 시험 접수 — 시트에 '테스트' 줄 1개 + 알림 메일 1통. 확인 후 그 줄은 지우세요.
+function testPost() {
+  const out = doPost({ parameter: { store: '테스트(지워 주세요)', phone: '010-0000-' + String(Math.floor(1000 + Math.random() * 9000)),
+    business_type: '기타 서비스업', message: '편집기에서 실행한 시험 접수입니다.', privacy_agree: '동의', page: '/apps-script-test' } });
+  console.log(out.getContent());
 }
 
 // ────────────────────────────────────────────── 최초 1회 실행
@@ -96,7 +113,7 @@ function setup() {
   sh.setConditionalFormatRules(rules);
 
   installTriggers_();
-  SpreadsheetApp.getActive().toast('설정 완료 — 이제 배포 → 새 배포 → 웹 앱으로 배포하세요.', 'ARCZ', 8);
+  ss_().toast('설정 완료 — 이제 배포 → 새 배포 → 웹 앱으로 배포하세요.', 'ARCZ', 8);
 }
 
 // ────────────────────────────────────────────── 상태가 바뀌면 날짜 자동 기록
@@ -142,7 +159,7 @@ function installTriggers_() {
 function notify_(d) {
   if (!CONFIG.NOTIFY_EMAILS.length) return;
   try {
-    const url = SpreadsheetApp.getActive().getUrl();
+    const url = ss_().getUrl();
     const body = [
       '새 진단 신청이 들어왔습니다.', '',
       '매장·브랜드명: ' + d.store, '연락처: ' + d.phone, '업종: ' + (d.type || '-'),
@@ -154,8 +171,13 @@ function notify_(d) {
 }
 
 // ────────────────────────────────────────────── 도우미
+function ss_() {
+  const ss = CONFIG.SPREADSHEET_ID ? SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID) : SpreadsheetApp.getActive();
+  if (!ss) throw new Error('스프레드시트에 연결되지 않았습니다 — 시트의 [확장 프로그램 → Apps Script]에서 만들거나 CONFIG.SPREADSHEET_ID를 넣으세요.');
+  return ss;
+}
 function sheet_() {
-  const ss = SpreadsheetApp.getActive();
+  const ss = ss_();
   return ss.getSheetByName(CONFIG.SHEET_NAME) || ss.insertSheet(CONFIG.SHEET_NAME, 0);
 }
 function json_(o) {

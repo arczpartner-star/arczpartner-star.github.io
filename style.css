@@ -640,3 +640,10 @@ h1, h2, h3, h4 { margin:0; letter-spacing:-.03em; }
 }
 
 .ck-result, .ck-q, #get, #ck-apply { scroll-margin-top:96px; }
+
+/* 상단 메뉴 — 셀프 점검 강조 */
+.gnb a[href$="checkup.html"], .gnb a[href="/checkup"] { border:1.5px solid var(--arcz-violet); color:var(--arcz-violet); border-radius:var(--radius-pill); padding:7px 14px; }
+.gnb a[href$="checkup.html"]::after, .gnb a[href="/checkup"]::after { display:none; }
+.gnb a[href$="checkup.html"][aria-current="page"] { background:var(--arcz-mist); }
+@media (max-width:1280px) { .gnb { gap:20px; } .gnb a { font-size:14.5px; } }
+@media (max-width:1180px) { .gnb { display:none; } .menu-btn { display:flex; } }

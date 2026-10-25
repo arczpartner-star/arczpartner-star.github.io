@@ -164,15 +164,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!ok) { const first = form.querySelector('.invalid input, .invalid select'); if (first) first.focus(); return; }
 
       const endpoint = (window.ARCZ_CONFIG && window.ARCZ_CONFIG.leadEndpoint) || '';
-      const fail = text => {
+      const debug = /[?&]debug\b/.test(location.search);   // 주소 끝에 ?debug 를 붙이면 원인을 화면에 보여 줌
+      const fail = (text, detail) => {
+        if (detail) console.error('[ARCZ 상담 폼]', detail);
         btn.disabled = false; btn.innerHTML = label;
-        msg.innerHTML = (text || '전송하지 못했습니다. 잠시 후 다시 시도해 주세요.') +
+        msg.innerHTML = (text || '전송하지 못했습니다. 잠시 후 다시 시도해 주세요.') + (debug && detail ? ` <code style="display:block;margin:6px 0;color:#5D5873">원인: ${esc(detail)}</code>` : '') +
           ' 급하시면 <a href="tel:010-5727-0010" style="text-decoration:underline">010-5727-0010</a> 또는 카카오톡 채널로 연락 주세요.';
         msg.classList.add('show');
       };
       const btn = form.querySelector('button[type="submit"]');
       const label = btn.innerHTML;
-      if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(endpoint)) { fail('상담 접수 주소가 아직 연결되지 않았습니다.'); return; }
+      if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(endpoint)) { fail('상담 접수 주소가 아직 연결되지 않았습니다.', 'config.js leadEndpoint = "' + endpoint + '"'); return; }
       btn.disabled = true; btn.textContent = '보내는 중…';
 
       const body = new URLSearchParams(new FormData(form));
@@ -188,8 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         // text/plain·urlencoded 단순 요청 → 브라우저 사전 요청(CORS preflight) 없이 Apps Script로 전송
         const r = await fetch(endpoint, { method: 'POST', body, redirect: 'follow' });
-        const data = await r.json();
-        if (!data.ok) { fail(data.message); return; }
+        const raw = await r.text();
+        let data;
+        try { data = JSON.parse(raw); }
+        catch (e3) { fail('', `HTTP ${r.status} · JSON이 아닌 응답(로그인 화면·오류 페이지일 가능성): ${raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160)}`); return; }
+        if (!data.ok) { fail(data.message, data.detail || data.code); return; }
         const tpl = form.dataset.done && document.getElementById(form.dataset.done);
         if (tpl) {
           form.innerHTML = tpl.innerHTML;
@@ -201,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.gtag) window.gtag('event', 'generate_lead', { form: ctx.page });
         if (window.fbq) window.fbq('track', 'Lead');
       } catch (err) {
-        fail();
+        fail('', `요청 실패(${err && err.message}) — 배포의 액세스 권한이 '모든 사용자'인지, 주소가 /exec로 끝나는지 확인`);
       }
     });
   });
