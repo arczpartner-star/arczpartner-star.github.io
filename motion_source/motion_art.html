@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:PSB;src:url(file:///home/claude/arcz/fonts/Pretendard-SemiBold.otf)}
+@font-face{font-family:PBD;src:url(file:///home/claude/arcz/fonts/Pretendard-Bold.otf)}
+@font-face{font-family:MSB;src:url(file:///home/claude/arcz/fonts/Montserrat-SemiBold.ttf)}
+@font-face{font-family:MBD;src:url(file:///home/claude/arcz/fonts/Montserrat-Bold.ttf)}
+html,body{margin:0;background:#1E1245;overflow:hidden}
+svg{display:block}
+.kk{font-family:MSB;letter-spacing:.24em;fill:#F3F0FF}
+.lb{font-family:PBD;fill:#fff;letter-spacing:-.02em}
+.nl{font-family:MBD;fill:#fff;text-anchor:middle;dominant-baseline:central}
+</style></head><body><svg id="s"></svg>
+<script>
+const Q=new URLSearchParams(location.search), FMT=Q.get('f')||'W';
+const CFG={
+ W:{W:1920,H:820,arc:{cx:1700,cy:921,a:600,b:621},th0:.10,nodeTh:[.50,.88,1.24,Math.PI/2],nodeR:30,zR:12,zDx:58,zGap:66,
+    lab:{dx:52,dy:[-4,-4,-4,-4],size:25,kick:12,showKick:true},grid:true,orbits:[48,104,176],contours:5,dotR:6.5},
+ M:{W:1080,H:710,arc:{cx:980,cy:816,a:690,b:636},th0:.14,nodeTh:[.60,.95,1.25,Math.PI/2],nodeR:46,zR:16,zDx:50,zGap:62,
+    lab:{dx:66,dy:[8,8,44,8],size:40,kick:0,showKick:false},grid:true,orbits:[60,130],contours:4,dotR:10}
+};
+const C=CFG[FMT], D=10, TAU=Math.PI*2, HALF=Math.PI/2;
+const NODES=[['A','01 · ANALYZE','현장 분석'],['R','02 · RELEVANCE','적합성 설계'],['C','03 · CONVERSION','전환 퍼널'],['Z','04 · ZENITH','정점']];
+const s=document.getElementById('s'); s.setAttribute('width',C.W); s.setAttribute('height',C.H); s.setAttribute('viewBox',`0 0 ${C.W} ${C.H}`);
+const f=v=>v.toFixed(1), cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), p=(t,a,b)=>cl((t-a)/(b-a));
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, eo=x=>1-Math.pow(1-x,3);
+const pt=(P,th)=>[P.cx-P.a*Math.cos(th),P.cy-P.b*Math.sin(th)];
+function arcPath(P,t0,t1,n=90){let d='';for(let i=0;i<=n;i++){const [x,y]=pt(P,t0+(t1-t0)*i/n);d+=(i?'L':'M')+f(x)+' '+f(y)}return d}
+// 결정적 난수(매 프레임 같은 값)
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const PARTS=[...Array(FMT==='W'?46:30)].map(()=>({u:rnd(),v:rnd(),r:.8+rnd()*1.8,ph:rnd()*TAU,n:1+Math.floor(rnd()*2),amp:4+rnd()*10}));
+
+const DEFS=`<defs>
+ <linearGradient id="surf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B6CFF"/><stop offset=".38" stop-color="#6C47FF"/><stop offset="1" stop-color="#4B2BD9"/></linearGradient>
+ <radialGradient id="zglow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(${C.arc.cx} ${C.arc.cy-C.arc.b}) scale(${C.W*.42})">
+   <stop offset="0" stop-color="#8B6CFF" stop-opacity=".55"/><stop offset=".45" stop-color="#6C47FF" stop-opacity=".16"/><stop offset="1" stop-color="#6C47FF" stop-opacity="0"/></radialGradient>
+ <radialGradient id="shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(${C.arc.cx-C.arc.a*.25} ${C.arc.cy-C.arc.b*.75}) scale(${C.arc.a*.9} ${C.arc.b*.7})">
+   <stop offset="0" stop-color="#F3F0FF" stop-opacity=".22"/><stop offset="1" stop-color="#F3F0FF" stop-opacity="0"/></radialGradient>
+ <radialGradient id="halo"><stop offset="0" stop-color="#F3F0FF" stop-opacity=".9"/><stop offset=".35" stop-color="#C9BDFF" stop-opacity=".35"/><stop offset="1" stop-color="#8B6CFF" stop-opacity="0"/></radialGradient>
+ <radialGradient id="gridmask" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(${C.arc.cx-C.arc.a*.35} ${C.arc.cy-C.arc.b*.8}) scale(${C.W*.38} ${C.H*.75})">
+   <stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+ <mask id="gm"><rect width="${C.W}" height="${C.H}" fill="url(#gridmask)"/></mask>
+ <pattern id="dots" width="${FMT==='W'?26:30}" height="${FMT==='W'?26:30}" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="${FMT==='W'?1.1:1.5}" fill="#8B6CFF" opacity=".5"/></pattern>
+ <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${FMT==='W'?6:9}"/></filter>
+ <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="${FMT==='W'?14:20}"/></filter>
+ <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="${FMT==='W'?8:12}" stdDeviation="${FMT==='W'?10:14}" flood-color="#14092F" flood-opacity=".55"/></filter>
+ <clipPath id="inside"><path id="clipp"/></clipPath>
+</defs>`;
+
+function render(t){
+  seed=7;
+  const br=Math.sin(TAU*t/D), P={...C.arc,b:C.arc.b+6*br}, top=pt(P,HALF), Z=[top[0]+C.zDx,top[1]-C.zGap];
+  const surfD=arcPath(P,0,HALF)+`L${C.W+80} ${f(top[1])}L${C.W+80} ${C.H+80}L${f(P.cx-P.a)} ${C.H+80}Z`;
+  let o=DEFS;
+  // 배경: 정점 주변 빛 + 점 격자
+  o+=`<rect width="${C.W}" height="${C.H}" fill="url(#zglow)"/>`;
+  if(C.grid)o+=`<rect width="${C.W}" height="${C.H}" fill="url(#dots)" mask="url(#gm)" opacity=".55"/>`;
+  // 바깥 궤도선(성장 궤적) — 천천히 흐르는 점선
+  C.orbits.forEach((g,i)=>{const Q2={cx:P.cx,cy:P.cy,a:P.a+g,b:P.b+g};
+    o+=`<path d="${arcPath(Q2,0,HALF)}L${C.W+80} ${f(Q2.cy-Q2.b)}" fill="none" stroke="#8B6CFF" stroke-width="${i?1:1.4}" opacity="${[.42,.26,.14][i]}" ${i===1?`stroke-dasharray="2 10" stroke-dashoffset="${f(-t*12*(FMT==='W'?1:1.4))}"`:''}/>`});
+  // 곡선 면
+  o+=`<path d="${surfD}" fill="url(#surf)"/>`;
+  o=o.replace('<path id="clipp"/>',`<path id="clipp" d="${surfD}"/>`);
+  o+=`<g clip-path="url(#inside)"><rect width="${C.W}" height="${C.H}" fill="url(#shine)"/>`;
+  for(let k=1;k<=C.contours;k++){const g=k*(FMT==='W'?62:70)+10*Math.sin(TAU*t/D+k*.7);const Q3={cx:P.cx,cy:P.cy,a:P.a-g,b:P.b-g};
+    if(Q3.a>40)o+=`<path d="${arcPath(Q3,0,HALF)}L${C.W+80} ${f(Q3.cy-Q3.b)}" fill="none" stroke="#F3F0FF" stroke-width="1" opacity="${(.16-.022*k).toFixed(3)}"/>`}
+  o+=`</g>`;
+  // 빛나는 가장자리
+  const edge=arcPath(P,.02,HALF)+`L${C.W+80} ${f(top[1])}`;
+  o+=`<path d="${edge}" fill="none" stroke="#C9BDFF" stroke-width="${FMT==='W'?6:9}" opacity=".35" filter="url(#glow)"/>`;
+  o+=`<path d="${edge}" fill="none" stroke="#F3F0FF" stroke-width="${FMT==='W'?1.6:2.4}" opacity=".85"/>`;
+  // 반짝이는 입자
+  PARTS.forEach(q=>{const x=C.W*(.48+.52*q.u)+q.amp*Math.sin(TAU*t/D*q.n+q.ph),y=C.H*q.v+q.amp*.6*Math.cos(TAU*t/D*q.n+q.ph);
+    const a=.15+.55*Math.pow((Math.sin(TAU*t/D*q.n+q.ph*2)+1)/2,2);o+=`<circle cx="${f(x)}" cy="${f(y)}" r="${q.r.toFixed(2)}" fill="#F3F0FF" opacity="${a.toFixed(3)}"/>`});
+  // 빛줄기(혜성) — 2.5초 간격, 4.2초 동안 곡선을 타고 올라 정점의 점으로 합쳐짐
+  const RISE=4.2,HOP=.55,GAP=2.5,N=4,TE=HALF,dts=[];let fx='',pulse=0,ripple=[];
+  for(let k=0;k<N;k++){const tau=((t-k*GAP)%D+D)%D;
+    const q=p(tau,RISE+HOP-.05,RISE+HOP+.7);if(q>0&&q<1){pulse=Math.max(pulse,Math.sin(Math.PI*q));ripple.push(q)}
+    if(tau>=RISE+HOP)continue;
+    const u=eio(p(tau,0,RISE)),th=C.th0+(TE-C.th0)*u;if(tau<RISE)dts.push(th);
+    const tl=.34*eo(p(tau,0,1.2)), thT=tau<RISE?Math.max(C.th0,th-tl):TE-tl*(1-eo(p(tau,RISE,RISE+.45))), thH=tau<RISE?th:TE;
+    const fade=tau<RISE?eo(p(tau,0,.4)):1-p(tau,RISE,RISE+HOP);
+    if(thH-thT>.003){const n=22;for(let i=0;i<n;i++){const a0=thT+(thH-thT)*i/n,a1=thT+(thH-thT)*(i+1)/n;const [x0,y0]=pt(P,a0),[x1,y1]=pt(P,a1),w=(i+1)/n;
+      fx+=`<path d="M${f(x0)} ${f(y0)}L${f(x1)} ${f(y1)}" stroke="#FFFFFF" stroke-width="${((FMT==='W'?4.6:6.5)*w).toFixed(2)}" stroke-linecap="round" opacity="${(fade*.9*w*w).toFixed(3)}"/>`}}
+    let x,y,r=C.dotR*eo(p(tau,0,.45));
+    if(tau<RISE)[x,y]=pt(P,th);else{const h=eo(p(tau,RISE,RISE+HOP));x=top[0]+(Z[0]-top[0])*h;y=top[1]+(Z[1]-top[1])*h;r=C.dotR*(1-.4*h)}
+    fx+=`<circle cx="${f(x)}" cy="${f(y)}" r="${f(r*7)}" fill="url(#halo)" opacity="${(.95*fade).toFixed(3)}"/><circle cx="${f(x)}" cy="${f(y)}" r="${r.toFixed(2)}" fill="#FFFFFF" opacity="${fade.toFixed(3)}"/>`;
+  }
+  o+=fx;
+  // A·R·C·Z 노드
+  C.nodeTh.forEach((th,i)=>{const [x,y]=pt(P,th);let k=0;dts.forEach(d=>{k=Math.max(k,1-Math.abs(d-th)/.09)});k=eo(cl(k));
+    const z=i===3,R=C.nodeR,[L,kick,ko]=NODES[i];
+    o+=`<g transform="translate(${f(x)} ${f(y)})">`;
+    o+=`<circle r="${f(R*2.3)}" fill="url(#halo)" opacity="${(.18+.5*k).toFixed(3)}"/>`;
+    if(k>0.02)o+=`<circle r="${f(R*(1.05+.75*(1-k)))}" fill="none" stroke="#F3F0FF" stroke-width="1.5" opacity="${(.6*k).toFixed(3)}"/>`;
+    o+=`<circle r="${R}" fill="${z?'#1E1245':'#24165A'}" stroke="${z?'#8B6CFF':'#E4DEFF'}" stroke-width="${z?(FMT==='W'?3:4.5):(FMT==='W'?1.6:2.4)}" filter="url(#shadow)"/>`;
+    o+=`<circle r="${f(R*.78)}" fill="none" stroke="#8B6CFF" stroke-width="1" opacity="${z?.0:.55}"/>`;
+    if(k>0.02&&!z)o+=`<circle r="${R}" fill="#6C47FF" opacity="${(.75*k).toFixed(3)}"/>`;
+    o+=`<text class="nl" font-size="${f(R*.8)}" y="1">${L}</text></g>`;
+    // 라벨
+    const lx=z?Z[0]-C.zDx+R+C.lab.dx*.55:x+R+C.lab.dx*.45, ly=y+R*.35+C.lab.dy[i];
+    const left=(FMT==='M'&&z), ax=left?'end':'start', lx2=left?x-R-18:lx, ly2=left?y-R*.9:ly;
+    o+=`<text class="lb" x="${f(lx2)}" y="${f(ly2)}" font-size="${C.lab.size}" text-anchor="${ax}">${ko}</text>`;
+    if(C.lab.showKick)o+=`<text class="kk" x="${f(lx2+1)}" y="${f(ly2+C.lab.kick*2.1)}" font-size="${C.lab.kick}" text-anchor="${ax}" opacity="${(.55+.45*k).toFixed(2)}">${kick}</text>`;
+  });
+  // 정점의 점 — 빛이 닿으면 숨쉬고 물결이 퍼짐
+  ripple.forEach(q=>{o+=`<circle cx="${f(Z[0])}" cy="${f(Z[1])}" r="${f(C.zR*(1.2+4.5*eo(q)))}" fill="none" stroke="#F3F0FF" stroke-width="1.5" opacity="${(.7*(1-q)).toFixed(3)}"/>`});
+  o+=`<circle cx="${f(Z[0])}" cy="${f(Z[1])}" r="${f(C.zR*6)}" fill="url(#halo)" opacity="${(.45+.35*pulse).toFixed(3)}"/>`;
+  o+=`<circle cx="${f(Z[0])}" cy="${f(Z[1])}" r="${(C.zR*(1+.2*pulse)).toFixed(2)}" fill="#FFFFFF"/>`;
+  s.innerHTML=o;
+}
+window.render=render; render(+(Q.get('t')||1.2));
+document.fonts.ready.then(()=>{window.__ready=true});
+</script></body></html>

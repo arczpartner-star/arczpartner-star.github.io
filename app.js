@@ -7,6 +7,8 @@ const ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 /* ---------- 사례 카드 ---------- */
+// 기간·조건(note)이 적힌 확인된 사례만 숫자가 올라가는 효과를 줍니다(예: '314건' → 0에서 314까지)
+const countHTML = v => { const m = String(v).match(/^([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/); return m ? `<span class="cu" data-to="${m[1].replace(/,/g, '')}">${esc(m[1])}</span>${esc(m[2])}` : esc(v); };
 function renderCases(id, list, opts) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -19,7 +21,7 @@ function renderCases(id, list, opts) {
     <article class="case reveal">
       <div class="case__top"><span class="tag">${esc(c.tag)}</span><h3>${esc(c.title)}</h3></div>
       <div class="case__stats">
-        ${c.stats.map(s => `<div><div class="n">${esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join('')}
+        ${c.stats.map(s => `<div><div class="n">${c.note ? countHTML(s.n) : esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join('')}
       </div>
       ${(() => { const inner = (opts && opts.short ? '' : `<p style="margin:0">${esc(c.body)}</p>`)
           + (c.note ? `<p class="note">※ ${esc(c.note)}</p>` : '')
@@ -27,6 +29,7 @@ function renderCases(id, list, opts) {
         return inner ? `<div class="case__body">${inner}</div>` : ''; })()}
     </article>`).join('');
   observeReveal(el);
+  if (window.ARCZ_MOTION) ARCZ_MOTION.counters(el);
 }
 
 /* ---------- 블로그 글 카드 ---------- */
@@ -246,7 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
     out.querySelector('.lvl').textContent = lvl;
     out.querySelector('.ck-bars').innerHTML = Object.keys(score).map(k => `
       <div class="${weak.includes(k) ? 'weak' : ''}"><span>${STAGE[k]}${weak.includes(k) ? ' · 먼저' : ''}</span>
-      <span class="tr"><i style="width:${Math.round(ratio(k) * 100)}%"></i></span><span class="v">${score[k]}/${max[k]}</span></div>`).join('');
+      <span class="tr"><i style="width:0" data-w="${Math.round(ratio(k) * 100)}%"></i></span><span class="v">${score[k]}/${max[k]}</span></div>`).join('');
+    // 막대가 0에서 점수까지 차오르고, '먼저' 단계는 한 번 반짝임
+    requestAnimationFrame(() => requestAnimationFrame(() => out.querySelectorAll('.ck-bars i').forEach((b, n) => { b.style.transitionDelay = (.15 + n * .12) + 's'; b.style.width = b.dataset.w; })));
     out.querySelector('.ck-advice-wrap').innerHTML = weak.map(k => document.getElementById('adv-' + k).innerHTML).join('');
     out.hidden = false;
     // 진단 신청 폼에 결과를 함께 보냄
@@ -257,30 +262,103 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-/* ---------- 처음으로 히어로 영상 ---------- */
-// 화면에 보이는 영상 하나만 내려받아 재생합니다. 준비되기 전에는 포스터 이미지가 보이고, 재생되면 부드럽게 바뀝니다.
-// 동작 줄이기 설정·데이터 절약 모드에서는 영상을 받지 않고 포스터만 보여 줍니다. 화면 밖으로 나가면 멈춥니다.
-document.addEventListener('DOMContentLoaded', () => {
-  const vids = [...document.querySelectorAll('.hero--motion .hv')];
-  if (!vids.length) return;
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData);
-  if (calm) return;
-  let inView = true;
-  const activate = () => {
-    vids.forEach(v => {
-      const shown = getComputedStyle(v).display !== 'none';
-      if (shown && !v.dataset.loaded) {
-        v.dataset.loaded = '1';
-        v.classList.add('wait');
-        v.innerHTML = `<source src="${v.dataset.webm}" type="video/webm"><source src="${v.dataset.mp4}" type="video/mp4">`;
-        v.preload = 'auto';
-        v.addEventListener('playing', () => { v.classList.remove('wait'); v.classList.add('on'); }, { once: true });
-        v.load();
-      }
-      if (shown && inView) { const p = v.play(); if (p) p.catch(() => {}); } else v.pause();
-    });
+
+
+/* ==========================================================================
+   모션 (2026.10.26) — 모두 '동작 줄이기' 설정에서는 꺼지고 바로 최종 상태로 보입니다.
+   ① 제목 단어 순서대로 등장 ② 선 그리기(진행 순서·타임라인·하위 페이지 곡선) ③ 숫자 카운트업
+   ④ 카드 스포트라이트(PC) ⑤ 진단 신청 버튼 펄스 ⑥ ARCZ Method 스크롤 스토리텔링
+   ========================================================================== */
+window.ARCZ_MOTION = (() => {
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = (els, fn, opt) => {
+    if (!els.length) return;
+    if (calm || !('IntersectionObserver' in window)) { els.forEach(fn); return; }
+    const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { fn(e.target); o.unobserve(e.target); } }), opt || { threshold: .3 });
+    els.forEach(e => o.observe(e));
   };
-  activate();
-  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(activate, 200); });
-  if ('IntersectionObserver' in window) new IntersectionObserver(es => { inView = es[0].isIntersecting; activate(); }).observe(vids[0].closest('.hero'));
-});
+
+  // ① 제목: 단어가 아래에서 위로 마스킹되며 차례로 등장, 강조 단어 끝의 점은 마지막에 찍힘
+  function split(h) {
+    if (h.dataset.split) return; h.dataset.split = '1';
+    let n = 0; const wrap = w => `<span class="sw"><span class="si" style="--d:${(n++ * .07).toFixed(2)}s">${w}</span></span>`;
+    [...h.childNodes].forEach(node => {
+      if (node.nodeType === 3) {
+        const parts = node.textContent.split(/(\s+)/).map(p => /^\s+$/.test(p) || !p ? p : wrap(p)).join('');
+        const span = document.createElement('span'); span.innerHTML = parts; node.replaceWith(...span.childNodes);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR') {
+        const s = document.createElement('span'); s.className = 'sw sw-hl'; node.replaceWith(s);
+        const i = document.createElement('span'); i.className = 'si'; i.style.setProperty('--d', (n++ * .07).toFixed(2) + 's'); i.appendChild(node); s.appendChild(i);
+        node.style.setProperty('--dd', (n * .07 + .55).toFixed(2) + 's');
+      }
+    });
+    h.classList.add('tsplit');
+    requestAnimationFrame(() => requestAnimationFrame(() => h.classList.add('tsplit-in')));
+  }
+
+  // ③ 숫자: 0에서 목표까지 easeOutExpo 1.8초 (소수 자릿수 유지)
+  function counters(root) {
+    const els = [...(root || document).querySelectorAll('.cu:not([data-done])')];
+    els.forEach(e => e.dataset.done = '1');
+    io(els, e => {
+      const to = parseFloat(e.dataset.to), dec = (e.dataset.to.split('.')[1] || '').length;
+      if (calm) { e.textContent = to.toFixed(dec); return; }
+      const t0 = performance.now(), dur = 1800, fmt = v => dec ? v.toFixed(dec) : Math.round(v).toLocaleString('ko-KR');
+      const step = now => { const k = Math.min(1, (now - t0) / dur), ease = k === 1 ? 1 : 1 - Math.pow(2, -10 * k); e.textContent = fmt(to * ease); if (k < 1) requestAnimationFrame(step); };
+      e.textContent = fmt(0); requestAnimationFrame(step);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.hero h1.h-display, .page-hero h1.h-display').forEach(h => calm ? null : split(h));
+
+    // ② 진행 순서 연결선: 화면에 들어오면 왼쪽부터 그려지고 번호가 차례로 켜짐
+    io([...document.querySelectorAll('.js-draw')], e => e.classList.add('drawn'));
+    // ② 타임라인: 스크롤 위치에 1:1로 세로선이 그려지고, 지나간 단계의 점이 채워짐
+    const tls = [...document.querySelectorAll('.tl')];
+    if (tls.length) {
+      const upd = () => tls.forEach(tl => {
+        const r = tl.getBoundingClientRect(), p = Math.max(0, Math.min(1, (innerHeight * .6 - r.top) / r.height));
+        tl.style.setProperty('--p', calm ? 1 : p.toFixed(4));
+        tl.querySelectorAll(':scope > div').forEach(d => d.classList.toggle('on', calm || d.getBoundingClientRect().top < innerHeight * .6));
+      });
+      addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+    }
+
+    counters();
+
+    // ④ 카드 스포트라이트 — 마우스가 있는 기기에서만
+    if (!calm && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const sel = '.card, .case, .pain, .explore a, .related a, .fit';
+      document.querySelectorAll(sel).forEach(c => c.classList.add('spot'));
+      document.addEventListener('pointermove', e => {
+        const c = e.target.closest && e.target.closest('.spot'); if (!c) return;
+        const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      }, { passive: true });
+    }
+
+    // ⑥ ARCZ Method 스크롤 스토리텔링
+    const sc = document.querySelector('.scrolly');
+    if (sc) {
+      const panel = sc.querySelector('.scrolly__panel'), steps = [...sc.querySelectorAll('.sc-step')], prog = sc.querySelector('.sc-arc .prog');
+      const nodes = [...sc.querySelectorAll('.sc-arc .nd')], vis = [...sc.querySelectorAll('.sc-vis')];
+      const setActive = i => {
+        panel.dataset.active = i;
+        nodes.forEach((n, k) => { n.classList.toggle('on', k === i); n.classList.toggle('past', k < i); });
+        vis.forEach((v, k) => v.classList.toggle('on', k === i));
+        steps.forEach((s, k) => s.classList.toggle('on', k === i));
+      };
+      setActive(0);
+      const upd = () => {
+        const r = sc.getBoundingClientRect(), mid = innerHeight * .5;
+        let a = 0; steps.forEach((s, k) => { if (s.getBoundingClientRect().top < mid) a = k; });
+        if (+panel.dataset.active !== a) setActive(a);
+        const first = steps[0].getBoundingClientRect(), last = steps[steps.length - 1].getBoundingClientRect();
+        const p = Math.max(0, Math.min(1, (mid - first.top) / Math.max(1, last.top - first.top)));   // 선이 스크롤에 1:1로 그려짐
+        if (prog) prog.style.strokeDashoffset = calm ? 0 : (1 - p * .985).toFixed(4);
+      };
+      addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+    }
+  });
+  return { counters };
+})();
