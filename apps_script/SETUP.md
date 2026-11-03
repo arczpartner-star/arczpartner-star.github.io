@@ -63,7 +63,7 @@
 ## 6. 홈페이지에서 시험
 
 1. `config.js`의 `leadEndpoint` 주소가 5단계 주소와 **글자 하나까지 같은지** 확인(끝이 `/exec`)
-2. `arcz.kr/contact.html?debug` 로 접속해 시험 신청
+2. `arcz.kr/contact?debug` 로 접속해 시험 신청
    - 성공: “진단 신청이 접수되었습니다” + 시트에 한 줄
    - 실패: 빨간 글씨 아래 **원인:** 이 나옵니다.
 

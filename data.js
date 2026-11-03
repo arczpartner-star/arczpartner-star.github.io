@@ -18,7 +18,7 @@ const CASES = [
       { n: "18.4%", l: "광고를 누른 사람 중 문의한 비율" }
     ],
     note: "2026.09 · 청소업체 메타 인스턴트 양식 기준 · ARCZ 운영 데이터",
-    linkText: "사례 이야기 전체 보기", linkUrl: "case-cleaning.html"
+    linkText: "사례 이야기 전체 보기", linkUrl: "/case-cleaning"
   },
   {
     tag: "홈서비스 · 메타 리드 광고 / SNS 브랜딩",
