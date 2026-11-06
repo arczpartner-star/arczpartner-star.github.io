@@ -808,3 +808,114 @@ html:not(.js) .hero--motion .hero-art { background-image:url(assets/motion/arcz_
 @keyframes marquee { to { transform:translateX(calc(-50% - 9px)); } }
 @media (max-width:768px) { .marquee { margin-top:28px; } .marquee a { width:156px; border-radius:12px; } .marquee__track { gap:12px; animation-duration:36s; } @keyframes marquee { to { transform:translateX(calc(-50% - 6px)); } } }
 @media (prefers-reduced-motion: reduce) { .marquee { overflow-x:auto; } .marquee__track { animation:none; } }
+
+/* ---------- 홈페이지 제작 사례 (11차) ---------- */
+.work { border:1px solid var(--arcz-line); border-radius:var(--radius-card); overflow:hidden; background:#fff; display:flex; flex-direction:column; }
+.work__shot { display:block; position:relative; width:100%; padding:0; border:0; background:var(--arcz-mist); cursor:zoom-in; aspect-ratio:16/10; overflow:hidden; }
+.work__shot img { display:block; width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+.work__shot:hover img, .work__shot:focus-visible img { transform:scale(1.025); }
+.work__zoom { position:absolute; right:14px; bottom:14px; background:rgba(30,18,69,.82); color:#fff; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:var(--radius-pill); }
+.work__body { padding:24px 26px 26px; font-size:15px; color:var(--arcz-slate); line-height:1.7; display:flex; flex-direction:column; flex:1; }
+.work__body .tag { font-size:13px; font-weight:700; color:var(--arcz-violet); }
+.work__body h3 { font-size:19px; line-height:1.45; margin:8px 0 0; color:var(--arcz-deep); }
+.work__body > p { margin:12px 0 0; }
+.work__scope { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.work__scope span { font-size:12.5px; font-weight:600; color:var(--arcz-deep); background:var(--arcz-mist); border:1px solid var(--arcz-line); border-radius:var(--radius-pill); padding:4px 10px; }
+.work__did { list-style:none; padding:0; margin:16px 0 0; display:grid; gap:8px; }
+.work__did li { position:relative; padding-left:22px; font-size:14.5px; line-height:1.6; }
+.work__did li::before { content:''; position:absolute; left:4px; top:.62em; width:7px; height:7px; border-radius:50%; background:var(--arcz-violet); }
+.work__thumbs { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-top:18px; }
+.work__thumbs button { padding:0; border:1px solid var(--arcz-line); border-radius:10px; overflow:hidden; background:var(--arcz-mist); cursor:zoom-in; aspect-ratio:16/10; }
+.work__thumbs button:hover, .work__thumbs button:focus-visible { border-color:var(--arcz-violet); }
+.work__thumbs img { display:block; width:100%; height:100%; object-fit:cover; }
+.work__body .note { margin-top:14px; }
+.work__body .link { margin-top:14px; font-size:14px; align-self:flex-start; }
+.work__body h3 + .link { margin-top:auto; padding-top:16px; }
+.case-pair { margin:0; border:1px solid var(--arcz-line); border-radius:var(--radius-card); overflow:hidden; background:#fff; display:flex; flex-direction:column; }
+.case-pair .work__shot { aspect-ratio:auto; flex:1; min-height:240px; }
+.case-pair figcaption { padding:20px 26px 22px; font-size:15px; line-height:1.6; color:var(--arcz-slate); }
+.case-pair figcaption b { color:var(--arcz-deep); }
+.case-pair figcaption .link { display:inline-flex; margin-top:8px; font-size:14px; }
+.gallery { border:0; padding:0; background:transparent; max-width:min(1240px, 94vw); width:100%; overflow:visible; }
+.gallery::backdrop { background:rgba(20,18,31,.86); }
+.gallery figure { margin:0; }
+.gallery img { display:block; width:100%; height:auto; max-height:82vh; object-fit:contain; border-radius:14px; background:var(--arcz-mist); }
+.gallery figcaption { color:#fff; text-align:center; font-size:14px; margin-top:12px; opacity:.85; }
+.gallery__nav, .gallery__close { position:absolute; width:46px; height:46px; border-radius:50%; border:0; background:#fff; color:var(--arcz-deep); font-size:28px; line-height:1; cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.25); }
+.gallery__nav { top:calc(50% - 40px); } .gallery__nav.prev { left:-23px; } .gallery__nav.next { right:-23px; }
+.gallery__close { top:-18px; right:-18px; font-size:26px; }
+@media (max-width:768px) {
+  .gallery__nav.prev { left:6px; } .gallery__nav.next { right:6px; } .gallery__close { top:-56px; right:0; }
+  .work__body { padding:20px 20px 22px; } .work__body h3 { font-size:17.5px; }
+}
+#proof-list > .case { height:100%; }
+
+/* 광고 운영 사례 — 넓은 카드 + 진행 흐름 (12차) */
+.case--wide .case__top { padding:30px 34px 28px; }
+.case--wide .case__top h3 { font-size:22px; }
+.case--wide .case__stats > div { padding:24px 34px; }
+.case--wide .case__stats .n { font-size:36px; }
+.case__flow { list-style:none; margin:0; padding:28px 34px 6px; display:grid; grid-template-columns:repeat(5, 1fr); gap:0; counter-reset:none; }
+.case__flow li { position:relative; padding:0 18px 0 0; }
+.case__flow li + li { padding-left:18px; border-left:1px solid var(--arcz-line); }
+.case__flow .no { font-family:var(--font-en); font-weight:700; font-size:12px; letter-spacing:.14em; color:var(--arcz-violet); }
+.case__flow b { display:block; margin-top:6px; font-size:16px; color:var(--arcz-deep); }
+.case__flow p { margin:6px 0 0; font-size:14px; line-height:1.6; color:var(--arcz-slate); }
+.case--wide .case__body { padding:18px 34px 26px; }
+@media (max-width:1000px) {
+  .case__flow { grid-template-columns:1fr; padding:22px 24px 0; gap:16px; }
+  .case__flow li, .case__flow li + li { padding:0 0 0 46px; border-left:0; }
+  .case__flow .no { position:absolute; left:0; top:2px; width:34px; height:34px; border-radius:50%; background:var(--arcz-mist); display:flex; align-items:center; justify-content:center; letter-spacing:.04em; }
+  .case__flow b { margin-top:0; }
+  .case--wide .case__top { padding:24px 24px 22px; } .case--wide .case__top h3 { font-size:19px; }
+  .case--wide .case__stats { grid-template-columns:1fr !important; }
+  .case--wide .case__stats > div { padding:16px 24px; } .case--wide .case__stats > div + div { border-left:0; border-top:1px solid var(--arcz-line); }
+  .case--wide .case__stats .n { font-size:30px; } .case--wide .case__body { padding:16px 24px 22px; }
+}
+
+/* 사례 분류 (13차) */
+.cat-tabs { position:sticky; top:var(--header-h); z-index:20; background:rgba(255,255,255,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--arcz-line); }
+.cat-tabs .wrap { display:flex; gap:8px; padding-top:14px; padding-bottom:14px; }
+.cat-tabs a { display:inline-flex; align-items:center; gap:10px; padding:11px 20px; border-radius:var(--radius-pill); border:1.5px solid var(--arcz-line); font-weight:700; font-size:15.5px; color:var(--arcz-deep); background:#fff; }
+.cat-tabs a small { font-family:var(--font-en); font-weight:700; font-size:10.5px; letter-spacing:.16em; color:var(--arcz-violet); }
+.cat-tabs a[aria-current] { background:var(--arcz-deep); border-color:var(--arcz-deep); color:#fff; }
+.cat-tabs a[aria-current] small { color:var(--arcz-soft); }
+.cat-sec[hidden] { display:none !important; }
+.case-cats { display:grid; grid-template-columns:1fr 2fr; gap:24px; margin-top:56px; align-items:stretch; }
+.case-cat { display:flex; flex-direction:column; }
+.case-cat > div { flex:1; }
+.case-cat .grid { margin-top:0; height:100%; }
+.cat-label { display:flex; align-items:center; gap:10px; font-weight:800; font-size:16px; color:var(--arcz-deep); padding-bottom:12px; margin-bottom:16px; border-bottom:2px solid var(--arcz-deep); }
+.cat-label small { font-family:var(--font-en); font-weight:700; font-size:11px; letter-spacing:.16em; color:var(--arcz-violet); }
+#case-preview > .case { height:100%; }
+@media (max-width:1100px) { .case-cats { grid-template-columns:1fr; } }
+@media (max-width:768px) { .cat-tabs a { padding:9px 14px; font-size:14px; } .cat-tabs a small { display:none; } .case-cats { margin-top:32px; gap:32px; } }
+
+/* ARCZ 영상 (14차) */
+.film { display:grid; grid-template-columns:360px 1fr; gap:80px; align-items:center; }
+.film__phone { position:relative; width:100%; max-width:360px; aspect-ratio:9/16; border-radius:44px; padding:12px; background:var(--arcz-deep); box-shadow:0 30px 70px rgba(30,18,69,.28); }
+.film__v { display:block; width:100%; height:100%; object-fit:cover; border-radius:33px; background:#2A1F5C; }
+.film__play { display:none; position:absolute; inset:12px; border:0; border-radius:33px; background:linear-gradient(180deg, rgba(30,18,69,0) 55%, rgba(30,18,69,.55)); cursor:pointer; flex-direction:column; align-items:center; justify-content:center; gap:14px; color:#fff; }
+.js .film__play { display:flex; }
+.film__phone.on .film__play { display:none; }
+.film__btn { width:78px; height:78px; border-radius:50%; background:var(--arcz-violet); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 10px rgba(108,71,255,.25); transition:transform .25s ease; }
+.film__btn svg { width:30px; height:30px; margin-left:4px; }
+.film__play:hover .film__btn, .film__play:focus-visible .film__btn { transform:scale(1.06); }
+.film__play small { position:absolute; bottom:26px; font-size:13.5px; font-weight:700; background:rgba(30,18,69,.7); padding:7px 14px; border-radius:var(--radius-pill); }
+.film__txt .h2 { margin-top:16px; }
+.film__txt .lead { margin-top:18px; }
+.film__steps { list-style:none; margin:28px 0 0; padding:0; border-top:1px solid var(--arcz-line); }
+.film__steps li { display:flex; gap:18px; align-items:baseline; padding:13px 0; border-bottom:1px solid var(--arcz-line); font-size:15.5px; color:var(--arcz-slate); line-height:1.55; }
+.film__steps li b { flex:none; width:84px; color:var(--arcz-violet); font-size:15.5px; }
+.film__steps.quote { counter-reset:q; }
+.film__steps.quote li::before { counter-increment:q; content:counter(q, decimal-leading-zero); flex:none; width:34px; font-family:var(--font-en); font-weight:700; font-size:12px; letter-spacing:.1em; color:var(--arcz-violet-light); }
+.film-dark { background:var(--arcz-deep); color:#fff; }
+.film-dark .h2 { color:#fff; } .film-dark .lead { color:rgba(255,255,255,.76); }
+.film-dark .kick { color:var(--arcz-violet-light); }
+.film-dark .film__steps, .film-dark .film__steps li { border-color:rgba(255,255,255,.14); color:rgba(255,255,255,.88); }
+.film-dark .film__phone { background:#0E0828; box-shadow:0 30px 80px rgba(0,0,0,.45); }
+@media (max-width:900px) {
+  .film { grid-template-columns:1fr; gap:40px; }
+  .film__phone { order:2; justify-self:center; max-width:300px; border-radius:38px; }
+  .film__v, .film__play { border-radius:28px; }
+}

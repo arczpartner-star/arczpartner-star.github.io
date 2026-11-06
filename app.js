@@ -7,7 +7,7 @@ const ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 /* ---------- 사례 카드 ---------- */
-// 기간·조건(note)이 적힌 확인된 사례만 숫자가 올라가는 효과를 줍니다(예: '314건' → 0에서 314까지)
+// 기간·조건(note)이 적힌 확인된 사례만 숫자가 올라가는 효과를 줍니다(예: '18.4%' → 0에서 18.4까지)
 const countHTML = v => { const m = String(v).match(/^([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/); return m ? `<span class="cu" data-to="${m[1].replace(/,/g, '')}">${esc(m[1])}</span>${esc(m[2])}` : esc(v); };
 function renderCases(id, list, opts) {
   const el = document.getElementById(id);
@@ -17,19 +17,77 @@ function renderCases(id, list, opts) {
     el.innerHTML = '<p class="muted">공개할 수 있는 사례를 정리하고 있습니다.</p>';
     return;
   }
-  el.innerHTML = items.map(c => `
-    <article class="case reveal">
+  const short = opts && opts.short;
+  el.innerHTML = items.map(c => {
+    const stats = short ? c.stats.slice(0, 2) : c.stats;
+    return `
+    <article class="case reveal${!short && c.flow ? ' case--wide' : ''}">
       <div class="case__top"><span class="tag">${esc(c.tag)}</span><h3>${esc(c.title)}</h3></div>
-      <div class="case__stats">
-        ${c.stats.map(s => `<div><div class="n">${c.note ? countHTML(s.n) : esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join('')}
+      <div class="case__stats" style="grid-template-columns:repeat(${stats.length}, 1fr)">
+        ${stats.map(s => `<div><div class="n">${c.note ? countHTML(s.n) : esc(s.n)}</div><div class="l">${esc(s.l)}</div></div>`).join('')}
       </div>
-      ${(() => { const inner = (opts && opts.short ? '' : `<p style="margin:0">${esc(c.body)}</p>`)
+      ${!short && c.flow ? `<ol class="case__flow">${c.flow.map((f, i) => `<li><span class="no">${String(i + 1).padStart(2, '0')}</span><b>${esc(f.k)}</b><p>${esc(f.t)}</p></li>`).join('')}</ol>` : ''}
+      ${(() => { const inner = (opts && opts.short || !c.body ? '' : `<p style="margin:0">${esc(c.body)}</p>`)
           + (c.note ? `<p class="note">※ ${esc(c.note)}</p>` : '')
+          + (short && !c.linkUrl && c.flow ? `<a class="link" href="/portfolio#ads">진행 흐름 보기 ${ICON_ARROW}</a>` : '')
           + (c.linkUrl ? `<a class="link" href="${esc(c.linkUrl)}"${/^https?:/.test(c.linkUrl) ? ' target="_blank" rel="noopener"' : ''}>${esc(c.linkText || '관련 글 보기')} ${ICON_ARROW}</a>` : '');
         return inner ? `<div class="case__body">${inner}</div>` : ''; })()}
-    </article>`).join('');
+    </article>`; }).join('');
   observeReveal(el);
   if (window.ARCZ_MOTION) ARCZ_MOTION.counters(el);
+}
+
+/* ---------- 홈페이지 제작 사례 카드 + 화면 크게 보기 ---------- */
+function renderWorks(id, list, opts) {
+  const el = document.getElementById(id);
+  if (!el || !list || !list.length) return;
+  const short = opts && opts.short;
+  const html = list.map((w, wi) => `
+    <article class="work reveal">
+      <button type="button" class="work__shot" data-work="${wi}" data-img="0" aria-label="${esc(w.name)} 이미지 크게 보기">
+        <img src="${esc(w.images[0].src)}" alt="${esc(w.images[0].alt)}" width="1600" height="1000" loading="lazy"><span class="work__zoom" aria-hidden="true">이미지 ${w.images.length}장 보기</span></button>
+      <div class="work__body">
+        <span class="tag">${esc(w.tag)}</span>
+        <h3>${esc(w.title)}</h3>
+        ${!short && w.scope ? `<div class="work__scope">${w.scope.map(s => `<span>${esc(s)}</span>`).join('')}</div>` : ''}
+        ${short ? `<a class="link" href="/portfolio#works">브랜딩 사례 보기 ${ICON_ARROW}</a>` : `
+        <p>${esc(w.body)}</p>
+        <ul class="work__did">${w.did.map(d => `<li>${esc(d)}</li>`).join('')}</ul>
+        <div class="work__thumbs">${w.images.map((im, i) => `<button type="button" data-work="${wi}" data-img="${i}" aria-label="${esc(im.alt)}"><img src="${esc(im.src)}" alt="" width="160" height="100" loading="lazy"></button>`).join('')}</div>
+        ${w.note ? `<p class="note">※ ${esc(w.note)}</p>` : ''}
+        ${w.linkUrl ? `<a class="link" href="${esc(w.linkUrl)}">${esc(w.linkText || '관련 사례 보기')} ${ICON_ARROW}</a>` : ''}`}
+      </div>
+    </article>`).join('');
+  if (opts && opts.append) el.insertAdjacentHTML('beforeend', html); else el.innerHTML = html;
+  observeReveal(el);
+  el.addEventListener('click', e => { const b = e.target.closest('[data-work]'); if (b) openGallery(list[+b.dataset.work], +b.dataset.img); });
+  document.querySelectorAll('[data-open-work]').forEach(b => b.addEventListener('click', () => openGallery(list[+b.dataset.openWork], 0)));
+}
+
+let galleryEl = null;
+function openGallery(work, start) {
+  if (!work) return;
+  if (!galleryEl) {
+    galleryEl = document.createElement('dialog');
+    galleryEl.className = 'gallery';
+    galleryEl.setAttribute('aria-label', '화면 크게 보기');
+    galleryEl.innerHTML = '<figure><img alt=""><figcaption></figcaption></figure>'
+      + '<button type="button" class="gallery__nav prev" aria-label="이전 화면">‹</button><button type="button" class="gallery__nav next" aria-label="다음 화면">›</button>'
+      + '<button type="button" class="gallery__close" aria-label="닫기">×</button>';
+    document.body.appendChild(galleryEl);
+    galleryEl.addEventListener('click', e => {
+      if (e.target.closest('.gallery__close') || e.target === galleryEl) galleryEl.close();
+      else if (e.target.closest('.prev')) galleryEl.go(-1);
+      else if (e.target.closest('.next')) galleryEl.go(1);
+    });
+    galleryEl.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') galleryEl.go(-1); if (e.key === 'ArrowRight') galleryEl.go(1); });
+  }
+  const g = galleryEl, imgs = work.images; let i = start || 0;
+  g.go = d => { i = (i + d + imgs.length) % imgs.length; show(); };
+  const show = () => { const im = g.querySelector('img'); im.src = imgs[i].src; im.alt = imgs[i].alt; g.querySelector('figcaption').textContent = `${imgs[i].alt} (${i + 1}/${imgs.length})`; };
+  show();
+  g.querySelectorAll('.gallery__nav').forEach(b => { b.hidden = imgs.length < 2; });
+  if (typeof g.showModal === 'function') g.showModal(); else window.open(imgs[i].src, '_blank');
 }
 
 /* ---------- 블로그 글 카드 ---------- */
@@ -361,4 +419,56 @@ window.ARCZ_MOTION = (() => {
     }
   });
   return { counters };
+})();
+
+/* ---------- 내 컴퓨터에서 파일을 바로 열어 볼 때(file://)도 메뉴 링크가 열리게 ----------
+   실제 사이트(arcz.kr)에서는 이 부분이 아무것도 하지 않습니다. */
+if (location.protocol === 'file:') document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="/"]');
+  if (!a || a.target === '_blank') return;
+  const m = a.getAttribute('href').match(/^\/([^?#]*)(\?[^#]*)?(#.*)?$/);
+  if (!m) return;
+  e.preventDefault();
+  const page = m[1] ? m[1].replace(/\/$/, '') + '.html' : 'index.html';
+  location.href = location.href.replace(/[^/]*$/, '') + page + (m[2] || '') + (m[3] || '');
+});
+
+/* ---------- 성과 사례: 광고 운영 / 브랜딩·홈페이지 분류 탭 ---------- */
+(function () {
+  const tabs = document.querySelectorAll('.cat-tabs a[data-cat]');
+  const secs = document.querySelectorAll('.cat-sec[data-cat]');
+  if (!tabs.length || !secs.length) return;
+  const show = (cat, scroll) => {
+    if (![...secs].some(s => s.dataset.cat === cat)) cat = secs[0].dataset.cat;
+    secs.forEach(s => { s.hidden = s.dataset.cat !== cat; });
+    tabs.forEach(a => { if (a.dataset.cat === cat) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    if (scroll) document.querySelector('.cat-tabs').scrollIntoView({ block: 'start' });
+    if (typeof observeReveal === 'function') observeReveal();
+  };
+  tabs.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault(); show(a.dataset.cat, false);
+    try { history.replaceState(null, '', '#' + a.dataset.cat); } catch (err) {}
+  }));
+  window.addEventListener('hashchange', () => show(location.hash.slice(1), true));
+  show(location.hash.slice(1), !!location.hash);
+})();
+
+/* ---------- ARCZ 영상: 누르면 소리와 함께 재생, 화면에서 벗어나면 멈춤 ---------- */
+(function () {
+  const films = document.querySelectorAll('.film__phone');
+  if (!films.length) return;
+  const vids = [];
+  films.forEach(box => {
+    const v = box.querySelector('video'), b = box.querySelector('.film__play');
+    if (!v || !b) return;
+    vids.push(v);
+    v.removeAttribute('controls');
+    b.addEventListener('click', () => { v.controls = true; box.classList.add('on'); const p = v.play(); if (p && p.catch) p.catch(() => {}); });
+    v.addEventListener('play', () => { box.classList.add('on'); vids.forEach(o => { if (o !== v && !o.paused) o.pause(); }); });
+    v.addEventListener('ended', () => { box.classList.remove('on'); v.controls = false; try { v.currentTime = 0; } catch (e) {} });
+  });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => { if (!en.isIntersecting && !en.target.paused) en.target.pause(); }), { threshold: .15 });
+    vids.forEach(v => io.observe(v));
+  }
 })();
